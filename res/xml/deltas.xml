@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <delta-sequence-collection>
+        <collection-name>Church Modes</collection-name>
+	    <delta-sequence>
+	        <name>Ionian (Major Scale)</name>
+	        <deltas>0,2,2,1,2,2,2,1</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Dorian</name>
+	        <deltas>0,2,1,2,2,2,1,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Phrygian</name>
+	        <deltas>0,1,2,2,2,1,2,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Lydian</name>
+	        <deltas>0,2,2,2,1,2,2,1</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Mixolydian</name>
+	        <deltas>0,2,2,1,2,2,1,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Aeolian (Minor Scale)</name>
+	        <deltas>0,2,1,2,2,1,2,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Locrian</name>
+	        <deltas>0,1,2,2,1,2,2,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+    </delta-sequence-collection>
+    
+    <delta-sequence-collection>
+        <collection-name>Arpeggios</collection-name>
+	    <delta-sequence>
+	        <name>Major</name>
+	        <deltas>0,4,3,5</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Minor</name>
+	        <deltas>0,3,4,5</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	    <delta-sequence>
+	        <name>Diminished</name>
+	        <deltas>0,3,3,6</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Augmented</name>
+	        <deltas>0,4,4,4</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Major 7</name>
+	        <deltas>0,4,3,4,1</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Minor 7</name>
+	        <deltas>0,3,4,3,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Dominant 7</name>
+	        <deltas>0,4,3,3,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Minor Major 7</name>
+	        <deltas>0,3,4,4,1</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Diminished 7</name>
+	        <deltas>0,3,3,3,3</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+	    
+	     <delta-sequence>
+	        <name>Half-diminished</name>
+	        <deltas>0,3,3,4,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>
+
+	    <delta-sequence>
+	        <name>Augmented 7</name>
+	        <deltas>0,4,4,2,2</deltas>
+	        <rhythm></rhythm>
+	    </delta-sequence>	    
+    </delta-sequence-collection>
+    
+    <delta-sequence-collection>
+        <collection-name>Melodies</collection-name>
+	    <delta-sequence>
+	        <name>Home Alone</name>
+	        <deltas>3,-3,3,-3,8,-5,-5,7,-2,-7,5,-1,-2,5,-3,3,-3,8,-5,2,2,1,-5,2,2,1,-5,2,2,1,-5,-7,5,-1,-2,-2</deltas>
+	        <rhythm>2,2,2,2,4,4,2,2,2,1,1,4,4,2,2,2,2,4,6,0.5,0.5,1,6,0.5,0.5,1,6,0.5,0.5,1,2,1,1,4,4,8</rhythm>
+	    </delta-sequence>   
+	    
+	    <delta-sequence>
+	        <name>Jurassic Park</name>
+	        <deltas>5,-1,1,-5,-2,7,-1,1,-5,-2,7,-1,1,2,0,3,0</deltas>
+	        <rhythm>1,1,2,2,2,1,1,2,2,2,1,1,3,1,3,1,3</rhythm>
+	    </delta-sequence> 
+	    
+	    <delta-sequence>
+	        <name>Mozart</name>
+	        <deltas>5,-5,5,-5,5,-5,5,4,3,-2,-3,3,-3,3,-3,-3,3,-7</deltas>
+	        <rhythm>1.5,0.5,1.5,0.5,0.5,0.5,0.5,0.5,2,1.5,0.5,1.5,0.5,0.5,0.5,0.5,0.5,2</rhythm>
+	    </delta-sequence>
+    </delta-sequence-collection>
+</resources>

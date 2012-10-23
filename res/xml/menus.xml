@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <menu>
+        <name>Main Menu</name>
+        <menu-link>Arpeggios</menu-link>
+        <menu-link>Church Modes</menu-link>        
+        <menu-link>Melodies</menu-link>
+    </menu>
+    
+    <menu>
+        <parent-menu>Main Menu</parent-menu>
+        <name>Arpeggios</name>
+        <delta-sequence-collection>Arpeggios</delta-sequence-collection>
+    </menu>
+    
+    <menu>
+        <parent-menu>Main Menu</parent-menu>
+        <name>Church Modes</name>
+        <delta-sequence-collection>Church Modes</delta-sequence-collection>
+    </menu>
+    
+    <menu>
+        <parent-menu>Main Menu</parent-menu>
+        <name>Melodies</name>
+        <delta-sequence-collection>Melodies</delta-sequence-collection>
+    </menu>    
+   
+</resources>
