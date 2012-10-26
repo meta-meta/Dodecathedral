@@ -5,6 +5,7 @@
         <menu-link>Arpeggios</menu-link>
         <menu-link>Church Modes</menu-link>        
         <menu-link>Melodies</menu-link>
+        <command>TOGGLE_DRONE</command>
     </menu>
     
     <menu>
@@ -23,6 +24,6 @@
         <parent-menu>Main Menu</parent-menu>
         <name>Melodies</name>
         <delta-sequence-collection>Melodies</delta-sequence-collection>
-    </menu>    
-   
+    </menu>
+
 </resources>

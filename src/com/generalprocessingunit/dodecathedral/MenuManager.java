@@ -39,7 +39,7 @@ public class MenuManager {
 	private static Menu currentMenu;	
 
 	public enum MenuItemType {
-		DEMO_SEQUENCE, EXERCISE, MENU, MESSAGE
+		DEMO_SEQUENCE, EXERCISE, MENU, MESSAGE, COMMAND
 	};
 
 	MenuManager(Dodecathedral parent) throws XmlPullParserException, IOException {
@@ -69,10 +69,13 @@ public class MenuManager {
 					}
 				} else if (tagName.equals("delta-sequence")) {
 					String sequenceKey = parser.nextText();
-					menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequenceKey, sequenceKey, new String()));
+					menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequenceKey, sequenceKey, null));
 				} else if (tagName.equals("menu-link")) {
 					String menuKey = parser.nextText();
-					menu.addMenuItem(new MenuItem(MenuItemType.MENU, menuKey, menuKey, new String()));
+					menu.addMenuItem(new MenuItem(MenuItemType.MENU, menuKey, menuKey, null));
+				} else if (tagName.equals("command")) {
+					String commandName = parser.nextText();
+					menu.addMenuItem(new MenuItem(MenuItemType.COMMAND, commandName, commandName, null));
 				} else if (tagName.equals("parent-menu")) {
 					String menuKey = parser.nextText();
 					menu.parentMenu = menus.get(menuKey);
@@ -86,8 +89,7 @@ public class MenuManager {
 				} 			
 			}
 			eventType = parser.next();
-		}
-		
+		}		
 		
 		currentMenu = menus.get("Main Menu");
 	}
@@ -217,10 +219,27 @@ public class MenuManager {
 				_parent.exercises.setExercise(_parent.exercises.exerciseLibrary.get(_itemKey));
 				_parent.exercises.runExercise();
 				break;
+			case COMMAND:
+				executeMenuCommand();
+				break;
 			default: // MESSAGE
 				break;
 
 			}
+		}
+		
+		void executeMenuCommand(){
+			switch(Commands.valueOf(_itemKey)){
+			case TOGGLE_DRONE:
+				toggleDrone();				
+			}
+		}
+
+		private void toggleDrone() {
+			// TODO move commands out to their own class and figure out how to gracefully change corresponding menu text
+			_parent.drone = !_parent.drone;
+			_itemText = _parent.drone ? "Stop Drone" : "Play Drone";
+			_parent.playDrone();
 		}
 
 		/**

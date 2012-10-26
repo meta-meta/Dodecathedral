@@ -47,6 +47,7 @@ public class Dodecathedral extends PApplet {
 	Notification gNotification;
 	long[] gVibrate = { 0, 20 };
 	
+	boolean drone = false;
 
 	@Override
 	public void setup() {
@@ -149,7 +150,7 @@ public class Dodecathedral extends PApplet {
 
 	void playNote() {
 		pd.sendFloat("pitch", deltaHistory.currentNote + 12);
-		pd.sendFloat("volume", 80);
+		pd.sendFloat("volume", 75);
 		pd.sendBang("playNote");
 	}
 
@@ -159,7 +160,21 @@ public class Dodecathedral extends PApplet {
 		// of the way.
 		pd.sendFloat("pitch", 12);
 		pd.sendFloat("volume", 0);
-		pd.sendBang("playNote");
+		pd.sendBang("playNote");		
+	}
+	
+	void playDrone() {
+		if(drone)
+		{
+			pd.sendFloat("droneVolume", 70);		
+			pd.sendFloat("dronePitch", 60);
+			pd.sendFloat("droneFreqOffsetL", -0.7f);
+			pd.sendFloat("droneFreqOffsetR", 0.7f);
+		}
+		else
+		{
+			pd.sendFloat("droneVolume", 0);
+		}
 	}
 
 	void singleTap() {
@@ -194,8 +209,19 @@ public class Dodecathedral extends PApplet {
 	}
 
 	@Override
+	protected void onPause() {
+		pd.sendFloat("droneVolume", 0);
+		super.onPause();
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		if (null != pd && drone) {
+			pd.sendFloat("droneVolume", 70);
+		}
+		
 		// Create our Notification Manager:
 		gNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// Create our Notification that will do the vibration:
