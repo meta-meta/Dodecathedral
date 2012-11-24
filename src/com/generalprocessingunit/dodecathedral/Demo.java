@@ -1,7 +1,7 @@
 package com.generalprocessingunit.dodecathedral;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
-import com.generalprocessingunit.dodecathedral.Mode.Modes;
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 import processing.core.PApplet;
 import android.util.Log;
@@ -74,7 +74,7 @@ public class Demo {
 			if (!_loop) {
 				playing = false;
 				reset();
-				Mode.switchMode(Modes.FREE_PLAY);
+				Modes.switchMode(Mode.FREE_PLAY);
 
 				// TODO make this less hacky. this should fix the dodecahedron
 				// going crazy when switching back to free_play

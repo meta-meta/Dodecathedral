@@ -19,7 +19,7 @@ import android.content.res.XmlResourceParser;
 import android.util.Log;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
-import com.generalprocessingunit.dodecathedral.Mode.Modes;
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class MenuManager {
 	private Dodecathedral _parent;
@@ -74,8 +74,9 @@ public class MenuManager {
 					String menuKey = parser.nextText();
 					menu.addMenuItem(new MenuItem(MenuItemType.MENU, menuKey, menuKey, null));
 				} else if (tagName.equals("command")) {
+					String menuText = parser.getAttributeValue(null, "text");
 					String commandName = parser.nextText();
-					menu.addMenuItem(new MenuItem(MenuItemType.COMMAND, commandName, commandName, null));
+					menu.addMenuItem(new MenuItem(MenuItemType.COMMAND, menuText, commandName, null));
 				} else if (tagName.equals("parent-menu")) {
 					String menuKey = parser.nextText();
 					menu.parentMenu = menus.get(menuKey);
@@ -213,7 +214,7 @@ public class MenuManager {
 				break;
 			case DEMO_SEQUENCE:
 				_parent.demo.setSequence(_parent.deltaSequences.deltaSequenceLibrary.get(_sequenceCollectionKey).get(_itemKey));
-				Mode.switchMode(Modes.DEMO_PLAYING);
+				Modes.switchMode(Mode.DEMO_PLAYING);
 				break;
 			case EXERCISE:
 				_parent.exercises.setExercise(_parent.exercises.exerciseLibrary.get(_itemKey));
@@ -229,7 +230,7 @@ public class MenuManager {
 		}
 		
 		void executeMenuCommand(){
-			switch(Commands.valueOf(_itemKey)){
+			switch(Command.valueOf(_itemKey)){
 			case TOGGLE_DRONE:
 				toggleDrone();				
 			}

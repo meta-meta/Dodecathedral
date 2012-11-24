@@ -5,7 +5,7 @@
         <menu-link>Arpeggios</menu-link>
         <menu-link>Church Modes</menu-link>        
         <menu-link>Melodies</menu-link>
-        <command>TOGGLE_DRONE</command>
+        <command text = "Play Drone">TOGGLE_DRONE</command>
     </menu>
     
     <menu>

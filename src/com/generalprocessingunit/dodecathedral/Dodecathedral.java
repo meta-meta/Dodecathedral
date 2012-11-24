@@ -20,7 +20,7 @@ import org.puredata.android.processing.PureDataP5Android;
 import org.puredata.core.utils.IoUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.generalprocessingunit.dodecathedral.Mode.Modes;
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 import processing.core.*;
 
@@ -32,6 +32,7 @@ public class Dodecathedral extends PApplet {
 	Dodecahedron dodecahedron = new Dodecahedron(this);
 	MapOverlay map = new MapOverlay(this);
 	MenuManager menuManager;
+	Message message;
 	DeltaSequences deltaSequences;
 	Demo demo = new Demo(this);
 	Exercises exercises;	
@@ -65,7 +66,9 @@ public class Dodecathedral extends PApplet {
 		
 		loadMenus();
 		
-		Mode.currentMode = Mode.Modes.FREE_PLAY;
+		message = new Message(this);
+		
+		Modes.currentMode = Modes.Mode.FREE_PLAY;
 	}
 
 	private void loadMenus() {
@@ -126,18 +129,21 @@ public class Dodecathedral extends PApplet {
 		// uncenter the screen
 		translate(-w / 2, -h / 2);
 
-		switch (Mode.currentMode) {
+		switch (Modes.currentMode) {
 		case DEMO_PLAYING:
 			demo.playSequence();
 			break;
 		case MENU:			
 			menuManager.plot(w / 40, h / 40, w - w / 20, h - h / 20);
 			break;
+		case MESSAGE:			
+			message.plot(w / 40, h / 2 + h / 40, w - w / 20, h / 2 - h / 20);
+			break;
 		default: // FREE_PLAY
 			dodecahedron.touchControl(mt);
 		}
 
-		if (Mode.currentMode != Modes.MENU) {
+		if (Modes.currentMode != Mode.MENU) {
 			// draw the note map
 			float mapSize = w / 7;
 			map.plot(w - (mapSize + 10), 10, mapSize);
@@ -269,7 +275,7 @@ public class Dodecathedral extends PApplet {
 		if (this.key == PConstants.CODED) {
 			if (this.keyCode == KeyEvent.KEYCODE_MENU) {
 
-				Mode.switchMode(Modes.MENU);
+				Modes.switchMode(Mode.MENU);
 
 				// TODO make this less hacky. this should fix the dodecahedron
 				// going crazy when switching back to free_play

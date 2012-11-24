@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
-import com.generalprocessingunit.dodecathedral.Mode.Modes;
+import com.generalprocessingunit.dodecathedral.Message.MessageType;
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class Exercises {
 	private Dodecathedral _parent;
@@ -50,11 +51,17 @@ public class Exercises {
 		// Exercise Complete!
 		if (_currentSequence == _currentExercise.deltaSequences.size()) {
 			running = false;
+			_parent.message.showMessage("WOW! You played the sequence!!!!", MessageType.PRAISE);
 			return;
 		}
 
 		// wait for the demo to finish playing
-		if (Mode.currentMode == Modes.DEMO_PLAYING) {
+		if (Modes.currentMode == Mode.DEMO_PLAYING) {
+			return;
+		}
+		
+		//we might be showing a rejection message
+		if (Modes.currentMode == Mode.MESSAGE) {
 			return;
 		}
 
@@ -62,22 +69,23 @@ public class Exercises {
 		if (!_demoPlayed[_currentSequence]) {
 			_parent.demo.setSequence(_currentExercise.deltaSequences.get(_currentSequence));
 			_demoPlayed[_currentSequence] = true;
-			Mode.switchMode(Modes.DEMO_PLAYING);
+			Modes.switchMode(Mode.DEMO_PLAYING);
 			return;
 		}
 
 		// we've played the demo for this sequence. now, change mode to INPUT so
 		// we can check what the user is playing against the sequence
-		if (Mode.currentMode != Modes.INPUT) {
+		if (Modes.currentMode != Mode.INPUT) {
 			_noteCountAtInputStart = _parent.deltaHistory.noteCount;
-			Mode.switchMode(Modes.INPUT);
+			Modes.switchMode(Mode.INPUT);
 		}
 
 		if (!checkNotesPlayed()) {
 			// You fucked up.
 			_parent.demo.setSequence(_currentExercise.deltaSequences.get(_currentSequence));
 			_demoPlayed[_currentSequence] = true;
-			Mode.switchMode(Modes.DEMO_PLAYING);
+			Modes.switchMode(Mode.DEMO_PLAYING);
+			_parent.message.showMessage("You fucked up. Try Again", MessageType.REJECTION);
 			return;
 		}
 
@@ -85,7 +93,7 @@ public class Exercises {
 		if (numNotesPlayed == _currentExercise.deltaSequences.get(_currentSequence).deltas.size()) {
 			// WOW! You played the sequence!!!!
 			_currentSequence++;
-			Mode.switchMode(Modes.FREE_PLAY);
+			Modes.switchMode(Mode.FREE_PLAY);			
 		}
 
 	}
