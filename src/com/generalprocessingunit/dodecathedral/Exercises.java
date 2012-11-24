@@ -47,14 +47,7 @@ public class Exercises {
 
 	void runExercise() {
 		running = true;
-
-		// Exercise Complete!
-		if (_currentSequence == _currentExercise.deltaSequences.size()) {
-			running = false;
-			_parent.message.showMessage("WOW! You played the sequence!!!!", MessageType.PRAISE);
-			return;
-		}
-
+		
 		// wait for the demo to finish playing
 		if (Modes.currentMode == Mode.DEMO_PLAYING) {
 			return;
@@ -93,9 +86,17 @@ public class Exercises {
 		if (numNotesPlayed == _currentExercise.deltaSequences.get(_currentSequence).deltas.size()) {
 			// WOW! You played the sequence!!!!
 			_currentSequence++;
-			Modes.switchMode(Mode.FREE_PLAY);			
-		}
+			Modes.switchMode(Mode.FREE_PLAY);
 
+			if (_currentSequence == _currentExercise.deltaSequences.size()) {
+				// Exercise Complete!
+				running = false;
+				_parent.message.showMessage("WOW! You've completed the exercise!!!!", MessageType.PRAISE);
+				return;
+			} else {
+				_parent.message.showMessage("WOW! You played the sequence!!", MessageType.PRAISE);
+			}
+		}
 	}
 
 	private boolean checkNotesPlayed() {

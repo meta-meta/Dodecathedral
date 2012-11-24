@@ -8,9 +8,9 @@ public class Message {
 	private Dodecathedral _parent;
 	private MultiTouch[] _mt;
 			
-	private static final Color _fillColor = new Color(75, 50, 75, 200);
-	private static final Color _strokeColor = new Color(255, 255, 255, 200);
-	private static final float _borderStrokeWeight = 4;
+	private static final Color _fillColor = new Color(0, 0, 0, 180);
+	//private static final Color _strokeColor = new Color(255, 255, 255, 200);
+	//private static final float _borderStrokeWeight = 4;
 	private static PFont _messageFont;
 	private static MessageType _messageType;
 	private static String _message;
@@ -22,14 +22,15 @@ public class Message {
 	}
 	
 	private void loadFonts() {
-		_messageFont = _parent.createFont("Arial", (_parent.sketchHeight() / 10));		
+		_messageFont = _parent.createFont("Arial", (_parent.sketchHeight() / 10), true, Dodecathedral.charset);		
 	}
 
 	void plot(float x, float y, float width, float height) {
 		//draw message box
 		_parent.fill(_fillColor.R, _fillColor.G, _fillColor.B, _fillColor.A);
-		_parent.stroke(_strokeColor.R, _strokeColor.G, _strokeColor.B, _strokeColor.A);
-		_parent.strokeWeight(_borderStrokeWeight);
+		//_parent.stroke(_strokeColor.R, _strokeColor.G, _strokeColor.B, _strokeColor.A);
+		//_parent.strokeWeight(_borderStrokeWeight);
+		_parent.noStroke();
 		_parent.rect(x, y, width, height);
 
 		//draw message text
@@ -61,8 +62,8 @@ public class Message {
 	public enum MessageType {
 		INFORMATION(new Color(255, 255, 255)), 
 		INSTRUCTION(new Color(255, 255, 255)), 
-		PRAISE(new Color(127, 255, 127)), 
-		REJECTION(new Color(255, 127, 127));
+		PRAISE(new Color(50, 255, 50)), 
+		REJECTION(new Color(255, 50, 50));
 
 		private final Color _messageColor;
 

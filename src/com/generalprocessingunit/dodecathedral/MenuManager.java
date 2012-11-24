@@ -96,8 +96,8 @@ public class MenuManager {
 	}
 
 	private void loadFonts() {
-		_menuTitleFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 10), true);
-		_menuItemFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 12), true);
+		_menuTitleFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 10), true, Dodecathedral.charset);
+		_menuItemFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 12), true, Dodecathedral.charset);
 	}
 
 	void plot(float x, float y, float width, float height) {

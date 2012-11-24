@@ -35,7 +35,10 @@ public class Dodecathedral extends PApplet {
 	Message message;
 	DeltaSequences deltaSequences;
 	Demo demo = new Demo(this);
-	Exercises exercises;	
+	Exercises exercises;
+	
+	//we need to preload the characters we're going to use in menus and messages
+	public static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\".toCharArray(); 
 
 	PImage[] symbols = new PImage[12];
 
@@ -135,19 +138,17 @@ public class Dodecathedral extends PApplet {
 			break;
 		case MENU:			
 			menuManager.plot(w / 40, h / 40, w - w / 20, h - h / 20);
-			break;
+			return;			
 		case MESSAGE:			
 			message.plot(w / 40, h / 2 + h / 40, w - w / 20, h / 2 - h / 20);
-			break;
+			return;
 		default: // FREE_PLAY
 			dodecahedron.touchControl(mt);
 		}
-
-		if (Modes.currentMode != Mode.MENU) {
-			// draw the note map
-			float mapSize = w / 7;
-			map.plot(w - (mapSize + 10), 10, mapSize);
-		}
+		
+		// draw the note map
+		float mapSize = w / 7;
+		map.plot(w - (mapSize + 10), 10, mapSize);
 		
 		if(exercises.running){
 			exercises.runExercise();
