@@ -9,20 +9,22 @@ package com.generalprocessingunit.dodecathedral;
 
 import java.io.File;
 import java.io.IOException;
-import android.content.Context;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
 import org.puredata.android.processing.PureDataP5Android;
 import org.puredata.core.utils.IoUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.generalprocessingunit.dodecathedral.Modes.Mode;
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PImage;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
-import processing.core.*;
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class Dodecathedral extends PApplet {
 
@@ -38,7 +40,7 @@ public class Dodecathedral extends PApplet {
 	Exercises exercises;
 	
 	//we need to preload the characters we're going to use in menus and messages
-	public static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\".toCharArray(); 
+	public static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\-+=".toCharArray(); 
 
 	PImage[] symbols = new PImage[12];
 
@@ -150,7 +152,7 @@ public class Dodecathedral extends PApplet {
 		float mapSize = w / 7;
 		map.plot(w - (mapSize + 10), 10, mapSize);
 		
-		if(exercises.running){
+		if(Exercises.running){
 			exercises.runExercise();
 		}
 	}
@@ -185,12 +187,12 @@ public class Dodecathedral extends PApplet {
 	}
 
 	void singleTap() {
-		deltaHistory.navigate(dodecahedron.selectedPentagon, true, this.millis());
+		deltaHistory.navigate(Dodecahedron.selectedPentagon, true, this.millis());
 		playNote();
 	}
 
 	void doubleTap() {
-		deltaHistory.navigate(dodecahedron.selectedPentagon, false, this.millis());
+		deltaHistory.navigate(Dodecahedron.selectedPentagon, false, this.millis());
 		playNote();
 	}
 

@@ -1,5 +1,5 @@
 package com.generalprocessingunit.dodecathedral;
 
 public enum Command {
-	TOGGLE_DRONE
+	TOGGLE_DRONE, QUIT_EXERCISE
 }

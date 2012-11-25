@@ -6,6 +6,7 @@
         <menu-link>Church Modes</menu-link>        
         <menu-link>Melodies</menu-link>
         <command text = "Play Drone">TOGGLE_DRONE</command>
+        <command text = "Quit Exercise">QUIT_EXERCISE</command>
     </menu>
     
     <menu>

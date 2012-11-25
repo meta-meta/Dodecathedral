@@ -1,7 +1,8 @@
 package com.generalprocessingunit.dodecathedral;
 
-import com.generalprocessingunit.dodecathedral.Modes.Mode;
 import processing.core.PFont;
+
+import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 
 public class Message {

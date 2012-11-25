@@ -1,7 +1,8 @@
 package com.generalprocessingunit.dodecathedral;
 
-import android.util.Log;
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PVector;
 
 /**Contains all the geometry, orientation, colors, textures to draw the dodecahedron. 
  * Manages touch control to rotate and play the dodecahedron.
@@ -13,17 +14,65 @@ public class Dodecahedron {
 	private static Dodecathedral parent;
 
 	//dodecahedron geometry
-	private static final PVector[] vertices = new PVector[20];
-	private static final  Pentagon[] pentagons = new Pentagon[12];
-	int selectedPentagon = 0;
+	private static final PVector[] vertices = new PVector[]{
+		// coordinates of all the dodecahedron vertices
+		new PVector(0.607f, 0.000f, 0.795f),
+		new PVector(0.188f, 0.577f, 0.795f),
+		new PVector(-0.491f, 0.357f, 0.795f),
+		new PVector(-0.491f, -0.357f, 0.795f),
+		new PVector(0.188f, -0.577f, 0.795f),
+		new PVector(0.982f, 0.000f, 0.188f),
+		new PVector(0.304f, 0.934f, 0.188f),
+		new PVector(-0.795f, 0.577f, 0.188f),
+		new PVector(-0.795f, -0.577f, 0.188f),
+		new PVector(0.304f, -0.934f, 0.188f),
+		new PVector(0.795f, 0.577f, -0.188f),
+		new PVector(-0.304f, 0.934f, -0.188f),
+		new PVector(-0.982f, 0.000f, -0.188f),
+		new PVector(-0.304f, -0.934f, -0.188f),
+		new PVector(0.795f, -0.577f, -0.188f),
+		new PVector(0.491f, 0.357f, -0.795f),
+		new PVector(-0.188f, 0.577f, -0.795f),
+		new PVector(-0.607f, 0.000f, -0.795f),
+		new PVector(-0.188f, -0.577f, -0.795f),
+		new PVector(0.491f, -0.357f, -0.795f)
+	};
+	private static final  Pentagon[] pentagons = new Pentagon[]{
+		// assign vertices to the correct pentagons. 
+		//Order matters here!
+		new Pentagon(new int[] { 0, 1, 2, 3, 4 }, vertices),
+		new Pentagon(new int[] { 0, 1, 6, 10, 5 }, vertices),
+		new Pentagon(new int[] { 1, 2, 7, 11, 6 }, vertices),
+		new Pentagon(new int[] { 2, 3, 8, 12, 7 }, vertices),
+		new Pentagon(new int[] { 3, 4, 9, 13, 8 }, vertices),
+		new Pentagon(new int[] { 4, 0, 5, 14, 9 }, vertices),		
+		new Pentagon(new int[] { 15, 16, 17, 18, 19 }, vertices),
+		new Pentagon(new int[] { 18, 19, 14, 9, 13 }, vertices),
+		new Pentagon(new int[] { 17, 18, 13, 8, 12 }, vertices),
+		new Pentagon(new int[] { 16, 17, 12, 7, 11 }, vertices),
+		new Pentagon(new int[] { 15, 16, 11, 6, 10 }, vertices),
+		new Pentagon(new int[] { 19, 15, 10, 5, 14 }, vertices)
+	};
+	static int selectedPentagon = 0;
 	
 	// used for tap indicator animation
-	int tap = 0;
-	int millisAtTap = 0;
+	static int tap = 0;
+	static int millisAtTap = 0;
 
 	//colors of the panels
-	private static final Color[] colors = new Color[] { new Color(0xFF0000), new Color(0xff6c00), new Color(0xffe400), new Color(0x80ff00), new Color(0x06c229), new Color(0x00fea7), new Color(0x00ffff),
-			new Color(0x008eff), new Color(0x0016ff), new Color(0x8000ff), new Color(0xf177ff), new Color(0xd20159) };
+	private static final Color[] colors = new Color[] { 
+		new Color(0xFF0000), 
+		new Color(0xff6c00), 
+		new Color(0xffe400), 
+		new Color(0x80ff00), 
+		new Color(0x06c229), 
+		new Color(0x00fea7), 
+		new Color(0x00ffff),
+		new Color(0x008eff), 
+		new Color(0x0016ff), 
+		new Color(0x8000ff), 
+		new Color(0xf177ff), 
+		new Color(0xd20159) };
 
 	//orientation
 	private static PVector lookAt = new PVector(0, 0, -1);
@@ -34,51 +83,10 @@ public class Dodecahedron {
 
 	// rotation coordinates for each panel so the computer can play
 	static float[] zRotLookup = new float[12];
-	static float[] xRotLookup = new float[12];	
-	
-	private static boolean magnet=false;
+	static float[] xRotLookup = new float[12];
 
 	Dodecahedron(Dodecathedral p) {
 		parent = p;
-
-		// coordinates of all the dodecahedron vertices
-		vertices[0] = new PVector(0.607f, 0.000f, 0.795f);
-		vertices[1] = new PVector(0.188f, 0.577f, 0.795f);
-		vertices[2] = new PVector(-0.491f, 0.357f, 0.795f);
-		vertices[3] = new PVector(-0.491f, -0.357f, 0.795f);
-		vertices[4] = new PVector(0.188f, -0.577f, 0.795f);
-		vertices[5] = new PVector(0.982f, 0.000f, 0.188f);
-		vertices[6] = new PVector(0.304f, 0.934f, 0.188f);
-		vertices[7] = new PVector(-0.795f, 0.577f, 0.188f);
-		vertices[8] = new PVector(-0.795f, -0.577f, 0.188f);
-		vertices[9] = new PVector(0.304f, -0.934f, 0.188f);
-		vertices[10] = new PVector(0.795f, 0.577f, -0.188f);
-		vertices[11] = new PVector(-0.304f, 0.934f, -0.188f);
-		vertices[12] = new PVector(-0.982f, 0.000f, -0.188f);
-		vertices[13] = new PVector(-0.304f, -0.934f, -0.188f);
-		vertices[14] = new PVector(0.795f, -0.577f, -0.188f);
-		vertices[15] = new PVector(0.491f, 0.357f, -0.795f);
-		vertices[16] = new PVector(-0.188f, 0.577f, -0.795f);
-		vertices[17] = new PVector(-0.607f, 0.000f, -0.795f);
-		vertices[18] = new PVector(-0.188f, -0.577f, -0.795f);
-		vertices[19] = new PVector(0.491f, -0.357f, -0.795f);
-
-		// assign vertices to the correct pentagons
-		pentagons[0] = new Pentagon(new int[] { 0, 1, 2, 3, 4 }, vertices);
-
-		pentagons[1] = new Pentagon(new int[] { 0, 1, 6, 10, 5 }, vertices);
-		pentagons[2] = new Pentagon(new int[] { 1, 2, 7, 11, 6 }, vertices);
-		pentagons[3] = new Pentagon(new int[] { 2, 3, 8, 12, 7 }, vertices);
-		pentagons[4] = new Pentagon(new int[] { 3, 4, 9, 13, 8 }, vertices);
-		pentagons[5] = new Pentagon(new int[] { 4, 0, 5, 14, 9 }, vertices);
-
-		pentagons[10] = new Pentagon(new int[] { 15, 16, 11, 6, 10 }, vertices);
-		pentagons[9] = new Pentagon(new int[] { 16, 17, 12, 7, 11 }, vertices);
-		pentagons[8] = new Pentagon(new int[] { 17, 18, 13, 8, 12 }, vertices);
-		pentagons[7] = new Pentagon(new int[] { 18, 19, 14, 9, 13 }, vertices);
-		pentagons[11] = new Pentagon(new int[] { 19, 15, 10, 5, 14 }, vertices);
-
-		pentagons[6] = new Pentagon(new int[] { 15, 16, 17, 18, 19 }, vertices);
 
 		// set the rotation coordinates for each panel
 		for(int i = 0; i < 12; i++){
@@ -115,8 +123,6 @@ public class Dodecahedron {
 						
 			zRotLookup[i] = minZR;
 			xRotLookup[i] = minXR;
-			
-			Log.d("RotLookups", "zRotLookup" + i + ": " + zRotLookup[i] + "xRotLookup" + i + ": " + xRotLookup[i]);
 		}
 	}
 
@@ -325,42 +331,19 @@ public class Dodecahedron {
 			xMomentum = 0;
 			xRot = -PConstants.HALF_PI;
 		}
-
-		//Calculate the time elapsed since the last touch event
-		int elapsedTime = parent.millis() - mt[0].millisAtLastMove;		
 		
 		// we have a finger on the screen
 		if (mt[0].touched) {
 
-			int timeBetweenMoves = (mt[0].millisAtLastMove - mt[0].prevMillis);
-			if (timeBetweenMoves > 0) {
-				zMomentum += ((mt[0].currentX - mt[0].prevX) / timeBetweenMoves) * 180;
-				xMomentum += ((mt[0].currentY - mt[0].prevY) / timeBetweenMoves) * 120;
+			int timeBetweenTouches = (mt[0].millisAtLastMove - mt[0].prevMillis);
+			if (timeBetweenTouches > 0) { //avoid divide by zero
+				zMomentum += ((mt[0].currentX - mt[0].prevX) / timeBetweenTouches) * 180;
+				xMomentum += ((mt[0].currentY - mt[0].prevY) / timeBetweenTouches) * 120;
 			}
-
-			magnet = false;
-
 			return;
 		}
 		
 		// At this point, the finger is no longer on the screen
-		
-		
-		//magnet stuff
-		if ((PApplet.abs(zMomentum) + PApplet.abs(xMomentum)) < 300) {
-			magnet = true;
-		}
-		
-		/*if (magnet) {
-			float angle = PApplet.sqrt(PVector.angleBetween(lookAt, pentagons[selectedPentagon].center));
-			float magneticForce = angle > PConstants.PI / 15 ? 1 / angle : 0;
-			Log.d("magnet", "angle: " + angle + " " + PConstants.PI / 60);
-
-			if (selectedPentagon != 0 && selectedPentagon != 6) {
-				zMomentum -= Demo.getRotationVelocity(magneticForce, zRot, zRotLookup[selectedPentagon]) * 10;
-			}
-			xMomentum += Demo.getRotationVelocity(magneticForce, xRot, xRotLookup[selectedPentagon]) * 10;
-		}		*/
 		
 		// Decelerate				
 		zMomentum -= zMomentum * (PApplet.abs(zMomentum) >= 50 ? 0.05 : 0.2);
@@ -371,7 +354,7 @@ public class Dodecahedron {
 		final int maxMillisBetweenTwoPointers = 200;
 		if (mt[0].totalMovement < maxMovementForTap && mt[0].tap) {
 
-			// check to see if we have a double tap and if so, how in synch the two taps are
+			// check to see if we have a two-finger tap and if so, how in synch the two taps are
 			if (PApplet.abs(mt[1].millisAtLastMove - mt[0].millisAtLastMove) < maxMillisBetweenTwoPointers && mt[1].tap) {
 				tap = 2;
 				parent.doubleTap();

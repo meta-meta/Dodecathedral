@@ -6,11 +6,17 @@ import java.util.Map;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 
+@SuppressWarnings("serial")
 public class DeltaSequenceCollection extends LinkedHashMap<String, DeltaSequence>
 {
 	String name;
 	ArrayList<String> messages;
 
+	public DeltaSequenceCollection() {
+		super();
+		messages = new ArrayList<String>();
+	}
+	
 	public DeltaSequenceCollection(Map<? extends String, ? extends DeltaSequence> map, String name, ArrayList<String> messages) {
 		super(map);
 		this.name = name;
@@ -25,5 +31,5 @@ public class DeltaSequenceCollection extends LinkedHashMap<String, DeltaSequence
 		this.put(deltaSequence.name, deltaSequence);			
 		this.name = deltaSequence.name;
 		messages = new ArrayList<String>();
-	}	
+	}
 }

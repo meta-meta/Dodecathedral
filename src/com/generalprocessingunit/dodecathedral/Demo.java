@@ -1,10 +1,9 @@
 package com.generalprocessingunit.dodecathedral;
 
+import processing.core.PApplet;
+
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
-
-import processing.core.PApplet;
-import android.util.Log;
 
 public class Demo {
 
@@ -55,13 +54,13 @@ public class Demo {
 
 			// get the dodecahedron in place then play the note
 			if (rotateDodecahedron(PApplet.abs(delta), 0.3f, 0.1f) && elapsedMillis > minElapsedMillis * _sequence.rhythm.get(_sequencePosition)) {
-				_parent.dodecahedron.millisAtTap = _parent.millis();
+				Dodecahedron.millisAtTap = _parent.millis();
 				_millisAtNoteLastPlayed = millisNow;
 				if (delta >= 0) {
-					_parent.dodecahedron.tap = 1;
+					Dodecahedron.tap = 1;
 					_parent.singleTap();
 				} else {
-					_parent.dodecahedron.tap = 2;
+					Dodecahedron.tap = 2;
 					_parent.doubleTap();
 				}
 
@@ -97,26 +96,26 @@ public class Demo {
 	boolean rotateDodecahedron(int pentagon, float zRotVelocity, float xRotVelocity) {
 		boolean inPosition = true;
 
-		if (!(getRotationalDistance(_parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity * 2)) {
-			_parent.dodecahedron.zRot += getRotationVelocity(zRotVelocity, _parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]);
+		if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity * 2)) {
+			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]);
 			inPosition = false;
-		} else if (!(getRotationalDistance(_parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity)) {
-			_parent.dodecahedron.zRot += getRotationVelocity(zRotVelocity, _parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 2;
+		} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity)) {
+			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 2;
 			inPosition = false;
-		} else if (!(getRotationalDistance(_parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity / 2)) {
-			_parent.dodecahedron.zRot += getRotationVelocity(zRotVelocity, _parent.dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 4;
+		} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity / 2)) {
+			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 4;
 			inPosition = false;
 		}
 
-		if (!(getRotationalDistance(_parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity * 2)) {
-			_parent.dodecahedron.xRot += getRotationVelocity(xRotVelocity, _parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]);
+		if (!(getRotationalDistance(Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity * 2)) {
+			Dodecahedron.xRot += getRotationVelocity(xRotVelocity, Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]);
 			inPosition = false;
-		} else if (!(getRotationalDistance(_parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity)) {
-			_parent.dodecahedron.xRot += getRotationVelocity(xRotVelocity, _parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) / 2;
+		} else if (!(getRotationalDistance(Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity)) {
+			Dodecahedron.xRot += getRotationVelocity(xRotVelocity, Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) / 2;
 			inPosition = false;
 		}
-		if (!(getRotationalDistance(_parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity / 2)) {
-			_parent.dodecahedron.xRot += getRotationVelocity(xRotVelocity, _parent.dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) / 4;
+		if (!(getRotationalDistance(Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity / 2)) {
+			Dodecahedron.xRot += getRotationVelocity(xRotVelocity, Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) / 4;
 			inPosition = false;
 		}
 

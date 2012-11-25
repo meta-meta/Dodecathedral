@@ -3,7 +3,6 @@ package com.generalprocessingunit.dodecathedral;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +12,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
-import processing.core.PGraphics;
-
 import android.content.res.XmlResourceParser;
-import android.util.Log;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
@@ -75,7 +71,7 @@ public class MenuManager {
 				if (tagName.equals("menu")) {
 					menu = new Menu();
 				} else if (tagName.equals("delta-sequence-collection")) {					
-					DeltaSequenceCollection collection = _parent.deltaSequences.deltaSequenceLibrary.get(parser.nextText());										
+					DeltaSequenceCollection collection = _parent.deltaSequences.get(parser.nextText());										
 					for (DeltaSequence sequence : collection.values()) {
 						menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequence.name, sequence.name, sequence.name));
 					}
@@ -261,6 +257,10 @@ public class MenuManager {
 		}
 
 		void plot(float x, float y, float width, float height, int page) {
+			if(_itemKey.equals("QUIT_EXERCISE") && !Exercises.running){
+				return;
+			}			
+			
 			//set these so we can check later if the user touches this item
 			this._x = x;
 			this._y = y;
@@ -278,7 +278,7 @@ public class MenuManager {
 				_currentMenu = _menus.get(_itemKey);
 				break;
 			case DEMO_SEQUENCE:
-				_parent.demo.setSequence(_parent.deltaSequences.deltaSequenceLibrary.get(_sequenceCollectionKey).get(_itemKey));
+				_parent.demo.setSequence(_parent.deltaSequences.get(_sequenceCollectionKey).get(_itemKey));
 				Modes.switchMode(Mode.DEMO_PLAYING);
 				break;
 			case EXERCISE:
@@ -296,7 +296,12 @@ public class MenuManager {
 		void executeMenuCommand(){
 			switch(Command.valueOf(_itemKey)){
 			case TOGGLE_DRONE:
-				toggleDrone();				
+				toggleDrone();
+				break;
+			case QUIT_EXERCISE:				
+				Exercises.running = false;
+				Modes.switchMode(Mode.FREE_PLAY);
+				break;
 			}
 		}
 

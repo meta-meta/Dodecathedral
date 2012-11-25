@@ -12,10 +12,10 @@ public class Exercises {
 	private Dodecathedral _parent;
 	Map<String, Exercise> exerciseLibrary;
 	
-	Boolean running = false;
+	static Boolean running = false;
 	private Exercise _currentExercise;
-	private Iterator _messageIterator;
-	private Iterator _sequenceIterator;	
+	private Iterator<?> _messageIterator;
+	private Iterator<?> _sequenceIterator;	
 	private DeltaSequence _currentSequence;	
 	private int _currentSequenceIndex = -1;
 	private boolean[] _demoPlayed;
@@ -29,7 +29,7 @@ public class Exercises {
 		_parent = parent;
 		exerciseLibrary = new HashMap<String, Exercise>();		
 		
-		for (DeltaSequenceCollection deltaSequenceCollection : _parent.deltaSequences.deltaSequenceLibrary.values())
+		for (DeltaSequenceCollection deltaSequenceCollection : _parent.deltaSequences.values())
 		{
 			//add an exercise that encapsulates this collection
 			Exercise exercise = new Exercise(deltaSequenceCollection, true);

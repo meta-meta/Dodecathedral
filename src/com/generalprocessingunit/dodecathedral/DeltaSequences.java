@@ -1,13 +1,13 @@
 package com.generalprocessingunit.dodecathedral;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.io.IOException;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.res.XmlResourceParser;
 
 /**
@@ -16,41 +16,36 @@ import android.content.res.XmlResourceParser;
  * @author Paul M. Christian
  * 
  */
-public class DeltaSequences {
-	Map<String, DeltaSequenceCollection> deltaSequenceLibrary;
-
+@SuppressWarnings("serial")
+public class DeltaSequences extends HashMap<String, DeltaSequenceCollection> {
 	DeltaSequences(Dodecathedral parent) throws XmlPullParserException, IOException {
-		deltaSequenceLibrary = new HashMap<String, DeltaSequenceCollection>();
+		super();		
 		XmlResourceParser parser = parent.getResources().getXml(com.generalprocessingunit.dodecathedral.R.xml.deltas);
 
 		int eventType = parser.getEventType();
 
-		Map<String, DeltaSequence> deltaSequenceCollection = new LinkedHashMap<String, DeltaSequence>();
-		DeltaSequence deltaSequence = new DeltaSequence();
-		String collectionName = new String();
-		String name = new String();
-		Boolean inDeltaSequence = false;
-		ArrayList<String> messages = new ArrayList<String>();
+		DeltaSequenceCollection deltaSequenceCollection = new DeltaSequenceCollection();
+		DeltaSequence deltaSequence = new DeltaSequence();			
+		Boolean inDeltaSequence = false;		
 		
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			String tagName = parser.getName();			
 
 			if (eventType == XmlPullParser.START_TAG) {
 				if (tagName.equals("delta-sequence-collection")) {
-					deltaSequenceCollection = new LinkedHashMap<String, DeltaSequence>();
-					collectionName = parser.getAttributeValue(null, "name");
+					deltaSequenceCollection = new DeltaSequenceCollection();
+					deltaSequenceCollection.name = parser.getAttributeValue(null, "name");
 				} else if (tagName.equals("delta-sequence")) {
 					deltaSequence = new DeltaSequence();
-					inDeltaSequence = true;
-				} else if (tagName.equals("name")) {					
-					deltaSequence.setName(parser.nextText());				
+					deltaSequence.setName(parser.getAttributeValue(null, "name"));
+					inDeltaSequence = true;								
 				} else if (tagName.equals("message")) {
 					if(inDeltaSequence){
 						deltaSequence.message = parser.nextText();
 					}
 					else
 					{
-						messages.add(parser.nextText());
+						deltaSequenceCollection.messages.add(parser.nextText());
 					}
 				} else if (tagName.equals("deltas")) {
 					deltaSequence.setDeltas(parser.nextText());
@@ -62,8 +57,7 @@ public class DeltaSequences {
 					deltaSequenceCollection.put(deltaSequence.name, deltaSequence);
 					inDeltaSequence = false;							
 				} else if (tagName.equals("delta-sequence-collection")) {
-					deltaSequenceLibrary.put(collectionName, new DeltaSequenceCollection(deltaSequenceCollection, collectionName, messages));
-					messages = new ArrayList<String>();
+					this.put(deltaSequenceCollection.name, deltaSequenceCollection);					
 				}				
 			}
 			eventType = parser.next();

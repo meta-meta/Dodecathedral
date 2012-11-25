@@ -52,8 +52,7 @@ public class MapOverlay {
 		// check to see if we moved by an interval more than a half step and if
 		// so, draw a trail
 		int delta = PApplet.abs(_parent.deltaHistory.deltas[0]);
-		if (delta > 1) {
-			int trail[] = new int[delta];
+		if (delta > 1) {			
 			for (int i = 1; i < delta; i++) {
 				int note = DeltaHistory.deltaAddition(_parent.deltaHistory.currentNote, -(_parent.deltaHistory.deltas[0] / delta) * i);
 
