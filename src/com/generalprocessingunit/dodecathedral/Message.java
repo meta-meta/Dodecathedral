@@ -22,7 +22,7 @@ public class Message {
 	}
 	
 	private void loadFonts() {
-		_messageFont = _parent.createFont("Arial", _parent.sketchHeight() / 10f, true, Dodecathedral.charset);		
+		_messageFont = _parent.createFont("Arial", _parent.sketchHeight() / 11f, true, Dodecathedral.charset);		
 	}
 
 	void plot(float x, float y, float width, float height) {
@@ -60,8 +60,8 @@ public class Message {
 	}
 	
 	public enum MessageType {
-		INFORMATION(new Color(255, 255, 255)), 
-		INSTRUCTION(new Color(255, 255, 255)), 
+		INFORMATION(new Color(127, 127, 255)), 
+		INSTRUCTION(new Color(255, 255, 127)), 
 		PRAISE(new Color(50, 255, 50)), 
 		REJECTION(new Color(255, 50, 50));
 

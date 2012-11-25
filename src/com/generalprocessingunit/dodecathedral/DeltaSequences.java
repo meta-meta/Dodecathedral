@@ -29,20 +29,29 @@ public class DeltaSequences {
 		DeltaSequence deltaSequence = new DeltaSequence();
 		String collectionName = new String();
 		String name = new String();
-
+		Boolean inDeltaSequence = false;
+		ArrayList<String> messages = new ArrayList<String>();
+		
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			String tagName = parser.getName();
+			String tagName = parser.getName();			
 
 			if (eventType == XmlPullParser.START_TAG) {
 				if (tagName.equals("delta-sequence-collection")) {
 					deltaSequenceCollection = new LinkedHashMap<String, DeltaSequence>();
-				} else if (tagName.equals("collection-name")) {
-					collectionName = parser.nextText();					
+					collectionName = parser.getAttributeValue(null, "name");
 				} else if (tagName.equals("delta-sequence")) {
 					deltaSequence = new DeltaSequence();
-				} else if (tagName.equals("name")) {
-					name = parser.nextText();
-					deltaSequence.name = name;
+					inDeltaSequence = true;
+				} else if (tagName.equals("name")) {					
+					deltaSequence.setName(parser.nextText());				
+				} else if (tagName.equals("message")) {
+					if(inDeltaSequence){
+						deltaSequence.message = parser.nextText();
+					}
+					else
+					{
+						messages.add(parser.nextText());
+					}
 				} else if (tagName.equals("deltas")) {
 					deltaSequence.setDeltas(parser.nextText());
 				} else if (tagName.equals("rhythm")) {
@@ -50,9 +59,11 @@ public class DeltaSequences {
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (tagName.equals("delta-sequence")) {
-					deltaSequenceCollection.put(name, deltaSequence);
+					deltaSequenceCollection.put(deltaSequence.name, deltaSequence);
+					inDeltaSequence = false;							
 				} else if (tagName.equals("delta-sequence-collection")) {
-					deltaSequenceLibrary.put(collectionName, new DeltaSequenceCollection(deltaSequenceCollection, collectionName));
+					deltaSequenceLibrary.put(collectionName, new DeltaSequenceCollection(deltaSequenceCollection, collectionName, messages));
+					messages = new ArrayList<String>();
 				}				
 			}
 			eventType = parser.next();
@@ -63,6 +74,7 @@ public class DeltaSequences {
 		List<Integer> deltas;
 		List<Float> rhythm;
 		String name;
+		String message = "Let's play %s"; //default message to be displayed for a deltasequence in an exercise
 
 		static final String delimiter = ",";
 
@@ -81,6 +93,11 @@ public class DeltaSequences {
 			for (String s : ss) {
 				this.deltas.add(Integer.parseInt(s));
 			}
+		}
+		
+		void setName(String name){
+			this.name = name;
+			message = String.format(message, name);
 		}
 
 		/**

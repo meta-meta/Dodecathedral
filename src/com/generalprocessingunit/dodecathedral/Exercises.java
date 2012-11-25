@@ -1,9 +1,7 @@
 package com.generalprocessingunit.dodecathedral;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
@@ -13,16 +11,20 @@ import com.generalprocessingunit.dodecathedral.Modes.Mode;
 public class Exercises {
 	private Dodecathedral _parent;
 	Map<String, Exercise> exerciseLibrary;
-	private Exercise _currentExercise;
+	
 	Boolean running = false;
-	private Iterator _sequenceIterator;
+	private Exercise _currentExercise;
+	private Iterator _messageIterator;
+	private Iterator _sequenceIterator;	
+	private DeltaSequence _currentSequence;	
 	private int _currentSequenceIndex = -1;
-	private DeltaSequence _currentSequence;
-	
-	
 	private boolean[] _demoPlayed;
+	private boolean[] _messageShown;
 	private int _noteCountAtInputStart;
 
+	/**Everything to do with Exercises. To run an exercise, must call setExercise() first then runExercise()
+	 * @param parent
+	 */
 	Exercises(Dodecathedral parent) {
 		_parent = parent;
 		exerciseLibrary = new HashMap<String, Exercise>();		
@@ -45,8 +47,10 @@ public class Exercises {
 		_currentExercise = exercise;
 		_sequenceIterator = exercise.deltaSequenceCollection.values().iterator();
 		_currentSequence = (DeltaSequence)_sequenceIterator.next();
-		_currentSequenceIndex = 0;		
+		_currentSequenceIndex = 0;
+		_messageIterator = exercise.deltaSequenceCollection.messages.iterator();
 		_demoPlayed = new boolean[_currentExercise.deltaSequenceCollection.size()];
+		_messageShown = new boolean[_currentExercise.deltaSequenceCollection.size()];
 	}
 
 	void runExercise() {
@@ -59,6 +63,22 @@ public class Exercises {
 		
 		//we might be showing a rejection message
 		if (Modes.currentMode == Mode.MESSAGE) {
+			return;
+		}
+		
+		//cycle through the instructional messages for this exercise
+		if(_messageIterator.hasNext())
+		{
+			Modes.switchMode(Mode.FREE_PLAY); //just something to switch back to that's not menu
+			_parent.message.showMessage((String)(_messageIterator.next()), MessageType.INSTRUCTION);
+			return;
+		}
+		
+		// if we haven't shown the message for the current sequence, show it
+		if (!_messageShown[_currentSequenceIndex]) {
+			_messageShown[_currentSequenceIndex] = true;
+			Modes.switchMode(Mode.FREE_PLAY); //just something to switch back to that's not menu
+			_parent.message.showMessage((String)(_currentSequence.message), MessageType.INFORMATION);
 			return;
 		}
 
@@ -89,9 +109,9 @@ public class Exercises {
 		if (numNotesPlayed == _currentSequence.deltas.size()) {
 			// WOW! You played the sequence!!!!
 			if (_sequenceIterator.hasNext()) {
+				_parent.message.showMessage(String.format("WOW! You played %s!!", _currentSequence.name), MessageType.PRAISE);
 				_currentSequenceIndex++;
-				_currentSequence = (DeltaSequence)_sequenceIterator.next();
-				_parent.message.showMessage("WOW! You played the sequence!!", MessageType.PRAISE);
+				_currentSequence = (DeltaSequence)_sequenceIterator.next();				
 			} else {				
 				// Exercise Complete!
 				running = false;
@@ -103,10 +123,8 @@ public class Exercises {
 	private boolean checkNotesPlayed() {
 		int numNotesPlayed = _parent.deltaHistory.noteCount - _noteCountAtInputStart;		
 		for (int i = 0; i < numNotesPlayed; i++) {
-			// consult the deltaHistory to see if the most recent set of notes
-			// played matches up to the sequence
-			// deltaHistory is in reverse order (most recent delta played is
-			// index 0)
+			// consult the deltaHistory to see if the most recent set of notes played matches up to the sequence
+			// deltaHistory is in reverse order (most recent delta played is index 0)
 			if (_currentSequence.deltas.get(i) != _parent.deltaHistory.deltas[(numNotesPlayed - 1) - i]) {
 				return false;
 			}

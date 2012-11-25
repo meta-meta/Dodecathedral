@@ -23,23 +23,36 @@ import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class MenuManager {
 	private Dodecathedral _parent;
+	
+	private static Map<String, Menu> _menus;
+	private static Menu _currentMenu;
+	
 	private MultiTouch[] _mt;
+	private float _xMomentum = 0;
+	
 	private static final Color _fillColor = new Color(75, 50, 75, 200);
 	private static final Color _strokeColor = new Color(255, 255, 255, 200);
 	private static final float _borderStrokeWeight = 4;
 
 	private static PFont _menuItemFont;
-	private static PFont _menuTitleFont;
-	private static final Color _menuItemFontColor = new Color(255, 255, 255);
+	private static PFont _menuTitleFont;	
 	private static final Color _menuTitleFontColor = new Color(200, 200, 180);
 
-	private float xMomentum = 0;
-
-	private static Map<String, Menu> menus;
-	private static Menu currentMenu;	
-
 	public enum MenuItemType {
-		DEMO_SEQUENCE, EXERCISE, MENU, MESSAGE, COMMAND
+		COMMAND(new Color(127, 127, 255)),
+		DEMO_SEQUENCE(new Color(127, 127, 127)), 
+		EXERCISE(new Color(127, 255, 127)), 
+		MENU(new Color(255, 255, 255));
+		
+		private final Color _menuItemColor;
+
+		MenuItemType(Color menuItemColor) {
+			_menuItemColor = menuItemColor;
+		}
+
+		private Color menuItemColor() {
+			return _menuItemColor;
+		}
 	};
 
 	MenuManager(Dodecathedral parent) throws XmlPullParserException, IOException {
@@ -47,7 +60,7 @@ public class MenuManager {
 		_mt = parent.mt;
 
 		loadFonts();
-		menus = new HashMap<String, Menu>();
+		_menus = new HashMap<String, Menu>();
 		
 		XmlResourceParser parser = parent.getResources().getXml(com.generalprocessingunit.dodecathedral.R.xml.menus);
 		int eventType = parser.getEventType();
@@ -79,20 +92,20 @@ public class MenuManager {
 					menu.addMenuItem(new MenuItem(MenuItemType.COMMAND, menuText, commandName, null));
 				} else if (tagName.equals("parent-menu")) {
 					String menuKey = parser.nextText();
-					menu.parentMenu = menus.get(menuKey);
+					menu.parentMenu = _menus.get(menuKey);
 				} else if (tagName.equals("name")) {
 					name = parser.nextText();
 					menu.title = name;
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (tagName.equals("menu")) {					
-					menus.put(name, menu);
+					_menus.put(name, menu);
 				} 			
 			}
 			eventType = parser.next();
 		}		
 		
-		currentMenu = menus.get("Main Menu");
+		_currentMenu = _menus.get("Main Menu");
 	}
 
 	private void loadFonts() {
@@ -111,9 +124,9 @@ public class MenuManager {
 		_parent.textFont(_menuTitleFont);
 		_parent.textAlign(PConstants.CENTER, PConstants.CENTER);
 		_parent.fill(_menuTitleFontColor.R, _menuTitleFontColor.G, _menuTitleFontColor.B, _menuTitleFontColor.A);
-		_parent.text(currentMenu.title, x + width / 2, height - height / 6 + height / 12);
+		_parent.text(_currentMenu.title, x + width / 2, height - height / 6 + height / 12);
 
-		currentMenu.plot(x, y, width, height - height / 6, 4, 2);
+		_currentMenu.plot(x, y, width, height - height / 6, 4, 2);
 
 		multiTouch();
 	}
@@ -124,9 +137,9 @@ public class MenuManager {
 		// we have a finger on the screen
 		if (_mt[0].touched) {
 			if (elapsedTime < 100) {
-				xMomentum = (_mt[0].currentX - _mt[0].prevX) * 50f;
+				_xMomentum = (_mt[0].currentX - _mt[0].prevX) * 50f;
 			} else {
-				xMomentum = 0;
+				_xMomentum = 0;
 			}
 
 		} else {
@@ -139,105 +152,21 @@ public class MenuManager {
 				float tX = _mt[0].currentX;
 				float tY = _mt[0].currentY;
 
-				currentMenu.selectItem(tX, tY);
+				_currentMenu.selectItem(tX, tY);
 
 				_mt[0].tap = false;
 			}
 
 			// prevent entering a loop of infinite division
-			if (PApplet.abs(xMomentum) < 1) {
-				xMomentum = 0;
+			if (PApplet.abs(_xMomentum) < 1) {
+				_xMomentum = 0;
 			}else{
-				xMomentum -= xMomentum * (elapsedTime/500f);
+				_xMomentum -= _xMomentum * (elapsedTime/500f);
 			}
 			
-			if(xMomentum < -500) { currentMenu.pageNext(4, 2); xMomentum = 0; }
-			if(xMomentum > 500) { currentMenu.pagePrev(); xMomentum = 0; }
+			if(_xMomentum < -500) { _currentMenu.pageNext(4, 2); _xMomentum = 0; }
+			if(_xMomentum > 500) { _currentMenu.pagePrev(); _xMomentum = 0; }
 		}		
-	}
-
-	public class MenuItem {
-		private MenuItemType _itemType;
-		private String _sequenceCollectionKey;
-		private String _itemText;
-		private String _itemKey;
-		private float _x, _y, _height, _width;
-		private int _page;
-
-		
-		/**
-		 * @param itemType What kind of menu item
-		 * @param itemText What text gets displayed on the menu
-		 * @param itemKey Hashmap Key for the item
-		 * @param sequenceCollectionKey only needed if the item is coming from a DataSequence collection in the library
-		 * 
-		 */
-		MenuItem(MenuItemType itemType, String itemText, String itemKey, String sequenceCollectionKey) {
-			_itemType = itemType;
-			_itemText = itemText;
-			_itemKey = itemKey;
-			if(itemType == MenuItemType.DEMO_SEQUENCE)
-			{
-				_sequenceCollectionKey = sequenceCollectionKey;
-			}
-		}
-
-		void plot(float x, float y, float width, float height, int page) {
-			//set these so we can check later if the user touches this item
-			this._x = x;
-			this._y = y;
-			this._height = height;
-			this._width = width;
-			this._page = page;			
-
-			_parent.text(_itemText, x, y, width, height);
-		}
-
-		void select() {
-			switch (_itemType) {
-			case MENU:
-				currentMenu = menus.get(_itemKey);
-				break;
-			case DEMO_SEQUENCE:
-				_parent.demo.setSequence(_parent.deltaSequences.deltaSequenceLibrary.get(_sequenceCollectionKey).get(_itemKey));
-				Modes.switchMode(Mode.DEMO_PLAYING);
-				break;
-			case EXERCISE:
-				_parent.exercises.setExercise(_parent.exercises.exerciseLibrary.get(_itemKey));
-				_parent.exercises.runExercise();
-				break;
-			case COMMAND:
-				executeMenuCommand();
-				break;
-			default: // MESSAGE
-				break;
-			}
-		}
-		
-		void executeMenuCommand(){
-			switch(Command.valueOf(_itemKey)){
-			case TOGGLE_DRONE:
-				toggleDrone();				
-			}
-		}
-
-		private void toggleDrone() {
-			// TODO move commands out to their own class and figure out how to gracefully change corresponding menu text
-			_parent.drone = !_parent.drone;
-			_itemText = _parent.drone ? "Stop Drone" : "Play Drone";
-			_parent.playDrone();
-		}
-
-		/**
-		 * @param x
-		 *            cursor x position
-		 * @param y
-		 *            cursor y position
-		 * @return True if cursor is within this item
-		 */
-		boolean isSelected(float x, float y, int page) {
-			return _page == page && _x < x && _x + _width > x && _y < y && _y + _height > y;
-		}
 	}
 
 	public class Menu {
@@ -263,10 +192,7 @@ public class MenuManager {
 		}
 
 		void plot(float x, float y, float width, float height, int rows, int columns) {
-
-			_parent.textFont(_menuItemFont);
-			_parent.textAlign(PConstants.CENTER, PConstants.CENTER);
-			_parent.fill(_menuItemFontColor.R, _menuItemFontColor.G, _menuItemFontColor.B, _menuItemFontColor.A);
+			_parent.textFont(_menuItemFont);						
 
 			for (int c = 0; c < columns; c++) {
 				for (int r = 0; r < rows; r++) {
@@ -304,9 +230,90 @@ public class MenuManager {
 	}
 
 	public void back() {
-		if(currentMenu.parentMenu !=null){
-			currentMenu = currentMenu.parentMenu;
+		if(_currentMenu.parentMenu !=null){
+			_currentMenu = _currentMenu.parentMenu;
 		}		
 	}
+	
+	public class MenuItem {
+		private MenuItemType _itemType;
+		private String _sequenceCollectionKey;
+		private String _itemText;
+		private String _itemKey;
+		private float _x, _y, _height, _width;
+		private int _page;
+		
+		/**
+		 * @param itemType What kind of menu item
+		 * @param itemText What text gets displayed on the menu
+		 * @param itemKey Hashmap Key for the item
+		 * @param sequenceCollectionKey only needed if the item is coming from a DataSequence collection in the library
+		 * 
+		 */
+		MenuItem(MenuItemType itemType, String itemText, String itemKey, String sequenceCollectionKey) {
+			_itemType = itemType;
+			_itemText = itemText;
+			_itemKey = itemKey;
+			if(itemType == MenuItemType.DEMO_SEQUENCE)
+			{
+				_sequenceCollectionKey = sequenceCollectionKey;
+			}
+		}
 
+		void plot(float x, float y, float width, float height, int page) {
+			//set these so we can check later if the user touches this item
+			this._x = x;
+			this._y = y;
+			this._height = height;
+			this._width = width;
+			this._page = page;			
+
+			_parent.fill(_itemType.menuItemColor().R, _itemType.menuItemColor().G, _itemType.menuItemColor().B, _itemType.menuItemColor().A);			
+			_parent.text(_itemText, x, y, width, height);
+		}
+
+		void select() {
+			switch (_itemType) {
+			case MENU:
+				_currentMenu = _menus.get(_itemKey);
+				break;
+			case DEMO_SEQUENCE:
+				_parent.demo.setSequence(_parent.deltaSequences.deltaSequenceLibrary.get(_sequenceCollectionKey).get(_itemKey));
+				Modes.switchMode(Mode.DEMO_PLAYING);
+				break;
+			case EXERCISE:
+				_parent.exercises.setExercise(_parent.exercises.exerciseLibrary.get(_itemKey));
+				_parent.exercises.runExercise();
+				break;
+			case COMMAND:
+				executeMenuCommand();
+				break;
+			default: // MESSAGE
+				break;
+			}
+		}
+		
+		void executeMenuCommand(){
+			switch(Command.valueOf(_itemKey)){
+			case TOGGLE_DRONE:
+				toggleDrone();				
+			}
+		}
+
+		private void toggleDrone() {
+			// TODO move commands out to their own class and figure out how to gracefully change corresponding menu text
+			_parent.drone = !_parent.drone;
+			_itemText = _parent.drone ? "Stop Drone" : "Play Drone";
+			_parent.playDrone();
+		}
+
+		/**
+		 * @param x cursor x position
+		 * @param y cursor y position
+		 * @return True if cursor is within this item
+		 */
+		boolean isSelected(float x, float y, int page) {
+			return _page == page && _x < x && _x + _width > x && _y < y && _y + _height > y;
+		}
+	}
 }

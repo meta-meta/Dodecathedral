@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <delta-sequence-collection>
-        <collection-name>Church Modes</collection-name>
+    <delta-sequence-collection name = "Church Modes">        
+        <messages>
+        	<message>Let's play through the modes.</message>
+        	<message>A major scale is a pattern of intervals we like to use to move from one place to the same place in a different octave.</message>
+        	<message>Modes are that same pattern but starting in a different spot.</message>
+        	<message>Note that the pattern is shifted in each successive mode.</message>
+        </messages>
 	    <delta-sequence>
 	        <name>Ionian (Major Scale)</name>
+	        <message>Let's play the Ionian Mode, commonly referred to as the Major Scale</message>
 	        <deltas>0,2,2,1,2,2,2,1</deltas>
 	        <rhythm></rhythm>
 	    </delta-sequence>
@@ -34,6 +40,7 @@
 	    
 	    <delta-sequence>
 	        <name>Aeolian (Minor Scale)</name>
+	        <message>The Aeolian Mode, or "Natural Minor Scale"</message>
 	        <deltas>0,2,1,2,2,1,2,2</deltas>
 	        <rhythm></rhythm>
 	    </delta-sequence>
@@ -45,8 +52,12 @@
 	    </delta-sequence>
     </delta-sequence-collection>
     
-    <delta-sequence-collection>
-        <collection-name>Arpeggios</collection-name>
+    <delta-sequence-collection name = "Arpeggios">
+    	<messages>
+        	<message>Let's play through some common arpeggios.</message>
+        	<message>Arpeggios are chords played one note at a time.</message>
+        	<message>The'll get you from one place to the same place in another ocatave.</message>        	
+        </messages>        
 	    <delta-sequence>
 	        <name>Major</name>
 	        <deltas>0,4,3,5</deltas>
@@ -114,8 +125,7 @@
 	    </delta-sequence>	    
     </delta-sequence-collection>
     
-    <delta-sequence-collection>
-        <collection-name>Melodies</collection-name>
+    <delta-sequence-collection name = "Melodies">        
 	    <delta-sequence>
 	        <name>Home Alone</name>
 	        <deltas>3,-3,3,-3,8,-5,-5,7,-2,-7,5,-1,-2,5,-3,3,-3,8,-5,2,2,1,-5,2,2,1,-5,2,2,1,-5,-7,5,-1,-2,-2</deltas>
