@@ -9,20 +9,20 @@
     </menu>
     
     <menu>
-        <parent-menu>Main Menu</parent-menu>
         <name>Arpeggios</name>
+        <parent-menu>Main Menu</parent-menu>        
         <delta-sequence-collection>Arpeggios</delta-sequence-collection>
     </menu>
     
     <menu>
-        <parent-menu>Main Menu</parent-menu>
         <name>Church Modes</name>
+        <parent-menu>Main Menu</parent-menu>        
         <delta-sequence-collection>Church Modes</delta-sequence-collection>
     </menu>
     
     <menu>
-        <parent-menu>Main Menu</parent-menu>
         <name>Melodies</name>
+        <parent-menu>Main Menu</parent-menu>        
         <delta-sequence-collection>Melodies</delta-sequence-collection>
     </menu>
 

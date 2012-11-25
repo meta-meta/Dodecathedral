@@ -22,7 +22,7 @@ public class Message {
 	}
 	
 	private void loadFonts() {
-		_messageFont = _parent.createFont("Arial", (_parent.sketchHeight() / 10), true, Dodecathedral.charset);		
+		_messageFont = _parent.createFont("Arial", _parent.sketchHeight() / 10f, true, Dodecathedral.charset);		
 	}
 
 	void plot(float x, float y, float width, float height) {

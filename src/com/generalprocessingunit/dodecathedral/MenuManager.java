@@ -61,12 +61,12 @@ public class MenuManager {
 			if (eventType == XmlPullParser.START_TAG) {
 				if (tagName.equals("menu")) {
 					menu = new Menu();
-				} else if (tagName.equals("delta-sequence-collection")) {
-					String sequenceCollection = parser.nextText();
-					String[] sequenceKeys = _parent.deltaSequences.deltaSequenceLibrary.get(sequenceCollection).keySet().toArray(new String[0]);					
-					for (String sequenceKey : sequenceKeys) {
-						menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequenceKey, sequenceKey, sequenceCollection));
+				} else if (tagName.equals("delta-sequence-collection")) {					
+					DeltaSequenceCollection collection = _parent.deltaSequences.deltaSequenceLibrary.get(parser.nextText());										
+					for (DeltaSequence sequence : collection.values()) {
+						menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequence.name, sequence.name, sequence.name));
 					}
+					menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, "Play All", collection.name, null));
 				} else if (tagName.equals("delta-sequence")) {
 					String sequenceKey = parser.nextText();
 					menu.addMenuItem(new MenuItem(MenuItemType.EXERCISE, sequenceKey, sequenceKey, null));
@@ -96,8 +96,8 @@ public class MenuManager {
 	}
 
 	private void loadFonts() {
-		_menuTitleFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 10), true, Dodecathedral.charset);
-		_menuItemFont = _parent.createFont("Arial", (int) (_parent.sketchHeight() / 12), true, Dodecathedral.charset);
+		_menuTitleFont = _parent.createFont("Arial", _parent.sketchHeight() / 10f, true, Dodecathedral.charset);
+		_menuItemFont = _parent.createFont("Arial", _parent.sketchHeight() / 12f, true, Dodecathedral.charset);
 	}
 
 	void plot(float x, float y, float width, float height) {
@@ -153,8 +153,7 @@ public class MenuManager {
 			
 			if(xMomentum < -500) { currentMenu.pageNext(4, 2); xMomentum = 0; }
 			if(xMomentum > 500) { currentMenu.pagePrev(); xMomentum = 0; }
-		}
-		//Log.d("menu", "xmomentum:" + xMomentum);
+		}		
 	}
 
 	public class MenuItem {
@@ -165,14 +164,11 @@ public class MenuManager {
 		private float _x, _y, _height, _width;
 		private int _page;
 
-		// PGraphics pg;
-		
-
 		
 		/**
 		 * @param itemType What kind of menu item
 		 * @param itemText What text gets displayed on the menu
-		 * @param itemKey Hash Key for the item
+		 * @param itemKey Hashmap Key for the item
 		 * @param sequenceCollectionKey only needed if the item is coming from a DataSequence collection in the library
 		 * 
 		 */
@@ -187,24 +183,14 @@ public class MenuManager {
 		}
 
 		void plot(float x, float y, float width, float height, int page) {
+			//set these so we can check later if the user touches this item
 			this._x = x;
 			this._y = y;
 			this._height = height;
 			this._width = width;
-			this._page = page;
+			this._page = page;			
 
-			/*
-			 * pg = _parent.createGraphics((int)width,(int)height,
-			 * PConstants.JAVA2D); pg.beginDraw(); pg.smooth();
-			 * pg.textAlign(PConstants.CENTER, PConstants.CENTER);
-			 * pg.textFont(_menuItemFont); pg.background(50);
-			 * pg.fill(_menuItemFontColor.R, _menuItemFontColor.G,
-			 * _menuItemFontColor.B, _menuItemFontColor.A); pg.text(_itemText,
-			 * width / 2, height / 2); pg.endDraw(); _parent.image(pg, x, y);
-			 */
-
-			_parent.text(_itemText, x + width / 2, y + height / 2);
-
+			_parent.text(_itemText, x, y, width, height);
 		}
 
 		void select() {
@@ -225,7 +211,6 @@ public class MenuManager {
 				break;
 			default: // MESSAGE
 				break;
-
 			}
 		}
 		

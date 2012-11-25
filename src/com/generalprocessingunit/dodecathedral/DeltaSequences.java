@@ -17,10 +17,10 @@ import android.content.res.XmlResourceParser;
  * 
  */
 public class DeltaSequences {
-	Map<String, Map<String, DeltaSequence>> deltaSequenceLibrary;
+	Map<String, DeltaSequenceCollection> deltaSequenceLibrary;
 
 	DeltaSequences(Dodecathedral parent) throws XmlPullParserException, IOException {
-		deltaSequenceLibrary = new HashMap<String, Map<String, DeltaSequence>>();
+		deltaSequenceLibrary = new HashMap<String, DeltaSequenceCollection>();
 		XmlResourceParser parser = parent.getResources().getXml(com.generalprocessingunit.dodecathedral.R.xml.deltas);
 
 		int eventType = parser.getEventType();
@@ -52,7 +52,7 @@ public class DeltaSequences {
 				if (tagName.equals("delta-sequence")) {
 					deltaSequenceCollection.put(name, deltaSequence);
 				} else if (tagName.equals("delta-sequence-collection")) {
-					deltaSequenceLibrary.put(collectionName, deltaSequenceCollection);
+					deltaSequenceLibrary.put(collectionName, new DeltaSequenceCollection(deltaSequenceCollection, collectionName));
 				}				
 			}
 			eventType = parser.next();
@@ -97,12 +97,11 @@ public class DeltaSequences {
 			// this is the delay before playing the first note
 			this.rhythm.add(0f);
 
-			if (rhythm.isEmpty()) {
+			if (rhythm.length() == 0) {
 				for (int i = 0; i < deltas.size(); i++) {
 					this.rhythm.add(1f);
 				}
 			} else {
-
 				String[] ss = rhythm.split(delimiter);
 				for (String s : ss) {
 					this.rhythm.add(Float.parseFloat(s));
