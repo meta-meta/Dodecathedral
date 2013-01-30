@@ -37,7 +37,7 @@ public class Dodecahedron {
 		new PVector(-0.188f, -0.577f, -0.795f),
 		new PVector(0.491f, -0.357f, -0.795f)
 	};
-	private static final  Pentagon[] pentagons = new Pentagon[]{
+	private static final Pentagon[] pentagons = new Pentagon[]{
 		// assign vertices to the correct pentagons. 
 		//Order matters here!
 		new Pentagon(new int[] { 0, 1, 2, 3, 4 }, vertices),
@@ -138,7 +138,7 @@ public class Dodecahedron {
 		
 		drawSymbols();
 		
-		drawBeveledEdges();
+		drawHighlightGlass();
 			
 		drawTapIndicator();
 	}
@@ -147,7 +147,7 @@ public class Dodecahedron {
 		parent.noStroke();
 		for (int i = 0; i < 12; i++) // loop through the 12 pentagons
 		{
-			int alpha = 127;
+			int alpha = 169;
 			if(selectedPentagon == i){
 				alpha = 255;
 			}
@@ -166,7 +166,7 @@ public class Dodecahedron {
 		}
 	}
 	
-	private void drawBeveledEdges() {
+	private void drawHighlightGlass() {
 		parent.noStroke();
 
 		parent.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
@@ -183,19 +183,6 @@ public class Dodecahedron {
 			parent.vertex(x, y, z);
 		}
 		parent.endShape(PConstants.CLOSE);
-		
-		/*for (int i = 0; i < 5; i++) {
-			int nextIndex = (i + 1) % 5;
-
-			parent.beginShape();
-
-			parent.vertex(pentagons[selectedPentagon].innerPentagon[i].x * 2000, pentagons[selectedPentagon].innerPentagon[i].y * 2000, pentagons[selectedPentagon].innerPentagon[i].z * 2000);
-			parent.vertex(pentagons[selectedPentagon].innerPentagon[nextIndex].x * 2000, pentagons[selectedPentagon].innerPentagon[nextIndex].y * 2000, pentagons[selectedPentagon].innerPentagon[nextIndex].z * 2000);
-			parent.vertex(pentagons[selectedPentagon].vertices[nextIndex].x * 1200, pentagons[selectedPentagon].vertices[nextIndex].y * 1200, pentagons[selectedPentagon].vertices[nextIndex].z * 1200);
-			parent.vertex(pentagons[selectedPentagon].vertices[i].x * 1200, pentagons[selectedPentagon].vertices[i].y * 1200, pentagons[selectedPentagon].vertices[i].z * 1200);
-
-			parent.endShape(PConstants.CLOSE);
-		}*/
 	}
 	
 	private void drawSymbols() {
@@ -254,8 +241,7 @@ public class Dodecahedron {
 	
 	void drawTapIndicator() {
 		parent.noFill();		
-		parent.noStroke();		
-		//parent.stroke(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B);
+		parent.noStroke();	
 
 		// single finger tap lights panel and fades for 500 milliseconds
 		if (tap == 1) {

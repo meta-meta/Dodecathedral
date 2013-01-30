@@ -9,7 +9,7 @@ import com.generalprocessingunit.dodecathedral.Message.MessageType;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class Exercises {
-	private Dodecathedral _parent;
+	private static Dodecathedral _parent;
 	Map<String, Exercise> exerciseLibrary;
 	
 	static Boolean running = false;

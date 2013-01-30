@@ -33,6 +33,7 @@ public class Dodecathedral extends PApplet {
 	DeltaHistory deltaHistory = new DeltaHistory();
 	Dodecahedron dodecahedron = new Dodecahedron(this);
 	MapOverlay map = new MapOverlay(this);
+	Starfield starfield = new Starfield(this);
 	MenuManager menuManager;
 	Message message;
 	DeltaSequences deltaSequences;
@@ -45,7 +46,7 @@ public class Dodecathedral extends PApplet {
 	PImage[] symbols = new PImage[12];
 
 	// Multi-Touch input
-	static int maxTouchEvents = 2;
+	private static final int maxTouchEvents = 2;
 	MultiTouch[] mt;
  
 	// Vibrator
@@ -54,6 +55,7 @@ public class Dodecathedral extends PApplet {
 	long[] gVibrate = { 0, 20 };
 	
 	boolean drone = false;
+    boolean starfieldOn = false;
 
 	@Override
 	public void setup() {
@@ -125,6 +127,12 @@ public class Dodecathedral extends PApplet {
 		
 		// center the screen
 		translate(w / 2, h / 2);
+		
+		// draw the starfield
+		if (starfieldOn) {
+			starfield.plot(0, 0);
+		}
+			
 
 		// draw the dodecahedron room
 		pushMatrix();

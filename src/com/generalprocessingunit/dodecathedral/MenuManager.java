@@ -298,11 +298,19 @@ public class MenuManager {
 			case TOGGLE_DRONE:
 				toggleDrone();
 				break;
+			case TOGGLE_STARFIELD:
+				toggleStarfield();
+				break;
 			case QUIT_EXERCISE:				
 				Exercises.running = false;
 				Modes.switchMode(Mode.FREE_PLAY);
 				break;
 			}
+		}
+
+		private void toggleStarfield() {
+			_parent.starfieldOn = !_parent.starfieldOn;
+			_itemText = _parent.starfieldOn ? "Starfield Off" : "Starfield On";						
 		}
 
 		private void toggleDrone() {

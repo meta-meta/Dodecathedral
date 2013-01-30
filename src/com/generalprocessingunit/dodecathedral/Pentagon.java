@@ -11,6 +11,7 @@ import processing.core.PVector;
  * 
  */
 public class Pentagon {
+	//TODO: use PShape objects to draw pentagons to take advantage of retained mode vertex buffers
 	final PVector[] vertices = new PVector[5];
 	final PVector[] innerPentagon = new PVector[5];
 	PVector center;
