@@ -97,15 +97,18 @@ public class Demo {
 	boolean rotateDodecahedron(int pentagon, float zRotVelocity, float xRotVelocity) {
 		boolean inPosition = true;
 
-		if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity * 2)) {
-			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]);
-			inPosition = false;
-		} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity)) {
-			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 2;
-			inPosition = false;
-		} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity / 2)) {
-			Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 4;
-			inPosition = false;
+		//we don't want to spin the z axis for the top and bottom pentagons
+		if(pentagon != 0 && pentagon != 6){
+			if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity * 2)) {
+				Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]);
+				inPosition = false;
+			} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity)) {
+				Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 2;
+				inPosition = false;
+			} else if (!(getRotationalDistance(Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) <= zRotVelocity / 2)) {
+				Dodecahedron.zRot += getRotationVelocity(zRotVelocity, Dodecahedron.zRot, Dodecahedron.zRotLookup[pentagon]) / 4;
+				inPosition = false;
+			}
 		}
 
 		if (!(getRotationalDistance(Dodecahedron.xRot, Dodecahedron.xRotLookup[pentagon]) <= xRotVelocity * 2)) {
