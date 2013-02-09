@@ -84,6 +84,9 @@ public class Dodecahedron {
 	// rotation coordinates for each panel so the computer can play
 	static float[] zRotLookup = new float[12];
 	static float[] xRotLookup = new float[12];
+	
+	// for touch control. has the user moved the dodecahedron?
+	private static boolean spun = false;
 
 	Dodecahedron(Dodecathedral p) {
 		parent = p;
@@ -320,13 +323,25 @@ public class Dodecahedron {
 		
 		// we have a finger on the screen
 		if (mt[0].touched) {
-
+			// Allow the player to stop with a tap
+			if(spun){
+				xMomentum = 0;
+				zMomentum = 0;
+				spun = false;
+				return;
+			}
+			
 			int timeBetweenTouches = (mt[0].millisAtLastMove - mt[0].prevMillis);
 			if (timeBetweenTouches > 0) { //avoid divide by zero
 				zMomentum += ((mt[0].currentX - mt[0].prevX) / timeBetweenTouches) * 180;
 				xMomentum += ((mt[0].currentY - mt[0].prevY) / timeBetweenTouches) * 120;
 			}
 			return;
+		}
+		
+		// Allow the player to stop with a tap
+		if(PApplet.abs(xMomentum) + PApplet.abs(zMomentum) > 0.1f){
+			spun = true;
 		}
 		
 		// At this point, the finger is no longer on the screen
@@ -339,7 +354,7 @@ public class Dodecahedron {
 		final int maxMovementForTap = 10;
 		final int maxMillisBetweenTwoPointers = 200;
 		if (mt[0].totalMovement < maxMovementForTap && mt[0].tap) {
-
+				
 			// check to see if we have a two-finger tap and if so, how in synch the two taps are
 			if (PApplet.abs(mt[1].millisAtLastMove - mt[0].millisAtLastMove) < maxMillisBetweenTwoPointers && mt[1].tap) {
 				tap = 2;
@@ -355,7 +370,7 @@ public class Dodecahedron {
 			millisAtTap = parent.millis();
 		}		
 	}
-
+	
 	private void orientate() {
 		// initially, orient the dodecahedron room so we're not looking at the
 		// ceiling

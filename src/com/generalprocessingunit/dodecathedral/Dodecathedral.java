@@ -250,6 +250,11 @@ public class Dodecathedral extends PApplet {
 
 	@Override
 	public boolean surfaceTouchEvent(MotionEvent me) {
+		// Avoid null pointer exception
+		if(null == me){
+			return super.surfaceTouchEvent(me);
+		}
+		
 		// Find number of touch points:
 		int pointers = me.getPointerCount();
 
