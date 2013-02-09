@@ -39,6 +39,7 @@ public class Dodecathedral extends PApplet {
 	DeltaSequences deltaSequences;
 	Demo demo = new Demo(this);
 	Exercises exercises;
+	UserData userData = new UserData();
 	
 	//we need to preload the characters we're going to use in menus and messages
 	public static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\-+=".toCharArray(); 

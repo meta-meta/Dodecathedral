@@ -19,8 +19,8 @@ public class Starfield {
 	//private static final Color fill = new Color(127, 127, 127, 127);
 	//private static final int strokeWeight = 3;
 
-	private static PVector[] stars = new PVector[100];
-	private int[] millisAtSpawn = new int[100];
+	private static PVector[] stars = new PVector[50];
+	private int[] millisAtSpawn = new int[50];
 	
 	Starfield(Dodecathedral parent) {
 		_parent = parent;
@@ -35,8 +35,12 @@ public class Starfield {
 
 	void generateVector(int i){
 		stars[i] = new PVector();
-		stars[i].x = (float)Math.random();
-		stars[i].y = (float)Math.random();
+		
+		float theta = (float)Math.random()*PConstants.TWO_PI;
+		float v = (float)Math.random()/2 + 0.25f;
+		stars[i].x = PApplet.cos(theta) * v;
+		stars[i].y = PApplet.sin(theta) * v;
+			
 		millisAtSpawn[i] = _parent.millis();
 	}
 
@@ -45,19 +49,16 @@ public class Starfield {
 		_parent.strokeWeight(3);		
 		
 		_parent.hint(PConstants.DISABLE_DEPTH_MASK);
-		
-		
-		
-		
-		for (int i = 0; i < 25; i++) {
+				
+		for (int i = 0; i < 15; i++) {
 			int millis = _parent.millis() - millisAtSpawn[i];
 
-			float newX = x + (stars[i].x - .5f) * millis * 2;
-			float newY = y + (stars[i].y - .5f) * millis * 2;
+			float newX = x + (stars[i].x) * millis;
+			float newY = y + (stars[i].y) * millis;
 
 			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
 				
-				_parent.line(newX*0.99f , newY*0.99f - 50,newX,newY-50);
+				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
 				//_parent.point(newX, newY);
 			} else {
 				generateVector(i);
@@ -67,15 +68,15 @@ public class Starfield {
 		_parent.stroke(127);
 		_parent.strokeWeight(3);		
 		
-		for (int i = 25; i < 50; i++) {
+		for (int i = 15; i < 30; i++) {
 			int millis = _parent.millis() - millisAtSpawn[i];
 
-			float newX = x + (stars[i].x - .5f) * millis * 2;
-			float newY = y + (stars[i].y - .5f) * millis * 2;
+			float newX = x + (stars[i].x) * millis;
+			float newY = y + (stars[i].y) * millis;
 
 			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
 				
-				_parent.line(newX*0.99f , newY*0.99f - 50,newX,newY-50);
+				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
 				//_parent.point(newX, newY);
 			} else {
 				generateVector(i);
@@ -83,17 +84,17 @@ public class Starfield {
 		}
 		
 		_parent.stroke(127);
-		_parent.strokeWeight(2);		
+		_parent.strokeWeight(3);		
 		
-		for (int i = 50; i < stars.length; i++) {
+		for (int i = 30; i < stars.length; i++) {
 			int millis = _parent.millis() - millisAtSpawn[i];
 
-			float newX = x + (stars[i].x - .5f) * millis * 2;
-			float newY = y + (stars[i].y - .5f) * millis * 2;
+			float newX = x + (stars[i].x) * millis;
+			float newY = y + (stars[i].y) * millis;
 
 			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
 				
-				_parent.line(newX*0.99f , newY*0.99f - 50,newX,newY-50);
+				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
 				//_parent.point(newX, newY);
 			} else {
 				generateVector(i);

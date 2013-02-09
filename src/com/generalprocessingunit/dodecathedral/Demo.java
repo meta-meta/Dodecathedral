@@ -2,7 +2,6 @@ package com.generalprocessingunit.dodecathedral;
 
 import processing.core.PApplet;
 
-import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class Demo {
@@ -39,6 +38,7 @@ public class Demo {
 
 		// -1 is the reset position
 		if (_sequencePosition == -1) {
+			_parent.deltaHistory.currentNote = 0;
 			_sequencePosition = 0;
 		}
 
@@ -70,6 +70,7 @@ public class Demo {
 
 		// if we've reached the end of the sequence either loop or stop playing
 		if (_sequencePosition == _sequence.deltas.size()) {
+			_parent.deltaHistory.currentNote = 0;
 			if (!_loop) {
 				playing = false;
 				reset();

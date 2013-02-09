@@ -1,5 +1,7 @@
 package com.generalprocessingunit.dodecathedral;
 
+import java.util.Map;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
@@ -15,25 +17,37 @@ public class UserData {
 	
 	public Data data;
 	
+	UserData(){
+		load();
+	}
+	
 	void save(){
-		SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(_parent.getApplicationContext());
+		/*SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(_parent.getApplicationContext());
 		Editor prefsEditor = appSharedPrefs.edit();		
 		
 		Gson gson = new Gson();		
 		String json = gson.toJson(data);
 		
 		prefsEditor.putString(_userData, json);
-		prefsEditor.commit();
+		prefsEditor.commit();*/
 	}
 	
 	void load(){
-		SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(_parent.getApplicationContext());
+		/*SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(_parent.getApplicationContext());
 		Gson gson = new Gson();		
 		String json = appSharedPrefs.getString(_userData, "");
-		data = gson.fromJson(json, Data.class);			 		
+		if(!json.equals("")){
+			data = gson.fromJson(json, Data.class);
+		}else{
+			data = new Data();
+		}*/
+		data=new Data();
 	}
 	
 	public class Data{
+		int longestRandomSequencePlayed = 0;
+		//Map<DeltaSequence, Map<String,?>> deltaSequencesCompleted;
+		
 		
 	}
 }

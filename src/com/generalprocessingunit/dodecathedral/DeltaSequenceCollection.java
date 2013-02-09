@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 
 @SuppressWarnings("serial")
 public class DeltaSequenceCollection extends LinkedHashMap<String, DeltaSequence>

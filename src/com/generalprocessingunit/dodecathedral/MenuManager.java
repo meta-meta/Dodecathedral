@@ -14,7 +14,6 @@ import processing.core.PConstants;
 import processing.core.PFont;
 import android.content.res.XmlResourceParser;
 
-import com.generalprocessingunit.dodecathedral.DeltaSequences.DeltaSequence;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class MenuManager {
@@ -257,7 +256,7 @@ public class MenuManager {
 		}
 
 		void plot(float x, float y, float width, float height, int page) {
-			if(_itemKey.equals("QUIT_EXERCISE") && !Exercises.running){
+			if(_itemKey.equals(Command.QUIT_EXERCISE.name()) && !Exercises.running){
 				return;
 			}			
 			
@@ -300,6 +299,10 @@ public class MenuManager {
 				break;
 			case TOGGLE_STARFIELD:
 				toggleStarfield();
+				break;
+			case RANDOM_EXERCISE:
+				_parent.exercises.setRandomExercise(3);
+				_parent.exercises.runExercise();
 				break;
 			case QUIT_EXERCISE:				
 				Exercises.running = false;
