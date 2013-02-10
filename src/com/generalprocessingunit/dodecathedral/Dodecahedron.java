@@ -11,7 +11,7 @@ import processing.core.PVector;
  *
  */
 public class Dodecahedron {
-	private static Dodecathedral parent;
+	private static Dodecathedral _parent;
 
 	//dodecahedron geometry
 	private static final PVector[] vertices = new PVector[]{
@@ -37,6 +37,7 @@ public class Dodecahedron {
 		new PVector(-0.188f, -0.577f, -0.795f),
 		new PVector(0.491f, -0.357f, -0.795f)
 	};
+	
 	private static final Pentagon[] pentagons = new Pentagon[]{
 		// assign vertices to the correct pentagons. 
 		//Order matters here!
@@ -55,10 +56,6 @@ public class Dodecahedron {
 	};
 	static int selectedPentagon = 0;
 	
-	// used for tap indicator animation
-	static int tap = 0;
-	static int millisAtTap = 0;
-
 	//colors of the panels
 	private static final Color[] colors = new Color[] { 
 		new Color(0xFF0000), 
@@ -75,22 +72,32 @@ public class Dodecahedron {
 		new Color(0xd20159) };
 
 	//orientation
-	private static PVector lookAt = new PVector(0, 0, -1);
+	private static PVector _lookAt = new PVector(0, 0, -1);
 	static float zRot = 0;
 	static float xRot = 0;
-	private static float zMomentum = 0;
-	private static float xMomentum = 0;
+	private static float _zRotPrev = 0;
+	private static float _xRotPrev = 0;
+	private static float _zMomentum = 0;
+	private static float _xMomentum = 0;
+	
+	// tap detection
+	private static final int _maxMovementForTap = 10;
+	private static final int _maxMillisBetweenTwoPointers = 200;
+	// used for tap indicator animation
+	static int tap = 0;
+	static int millisAtTap = 0;
 
 	// rotation coordinates for each panel so the computer can play
 	static float[] zRotLookup = new float[12];
 	static float[] xRotLookup = new float[12];
-	
-	// for touch control. has the user moved the dodecahedron?
-	private static boolean spun = false;
 
 	Dodecahedron(Dodecathedral p) {
-		parent = p;
+		_parent = p;
 
+		setRotationLookupCoordinates();
+	}
+
+	private void setRotationLookupCoordinates() {
 		// set the rotation coordinates for each panel
 		for(int i = 0; i < 12; i++){
 			float zR = 0;
@@ -147,15 +154,15 @@ public class Dodecahedron {
 	}
 
 	private void drawColoredPanels() {
-		parent.noStroke();
+		_parent.noStroke();
 		for (int i = 0; i < 12; i++) // loop through the 12 pentagons
 		{
 			int alpha = 169;
 			if(selectedPentagon == i){
 				alpha = 255;
 			}
-			parent.fill(colors[i].R, colors[i].G, colors[i].B, alpha);
-			parent.beginShape();
+			_parent.fill(colors[i].R, colors[i].G, colors[i].B, alpha);
+			_parent.beginShape();
 			for (int j = 0; j < 5; j++) // loop through each pentagon's vertices
 			{
 				//2000 is an arbitrary distance
@@ -163,19 +170,19 @@ public class Dodecahedron {
 				float y = pentagons[i].innerPentagon[j].y * 2000;
 				float z = pentagons[i].innerPentagon[j].z * 2000;
 
-				parent.vertex(x, y, z);
+				_parent.vertex(x, y, z);
 			}
-			parent.endShape(PConstants.CLOSE);
+			_parent.endShape(PConstants.CLOSE);
 		}
 	}
 	
 	private void drawHighlightGlass() {
-		parent.noStroke();
+		_parent.noStroke();
 
-		parent.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
+		_parent.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
 
 		//simpler approach
-		parent.beginShape();
+		_parent.beginShape();
 		for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
 		{
 			//2000 is an arbitrary distance
@@ -183,95 +190,92 @@ public class Dodecahedron {
 			float y = pentagons[selectedPentagon].vertices[i].y * 1200;
 			float z = pentagons[selectedPentagon].vertices[i].z * 1200;
 
-			parent.vertex(x, y, z);
+			_parent.vertex(x, y, z);
 		}
-		parent.endShape(PConstants.CLOSE);
+		_parent.endShape(PConstants.CLOSE);
 	}
 	
 	private void drawSymbols() {
-		parent.fill(255); //needed or the texture gets tinted for some reason		
-		parent.textureMode(PConstants.NORMAL); //our pentagon coordinates are based on the unit circle
+		_parent.fill(255); //needed or the texture gets tinted for some reason		
+		_parent.textureMode(PConstants.NORMAL); //our pentagon coordinates are based on the unit circle		
+		
+		_parent.beginShape();	
+		_parent.texture(_parent.symbols[selectedPentagon]);
+		for (int j = 0; j < 5; j++) // loop through each pentagon's vertices										
+		{
+			//1500 is an arbitrary distance closer than 2000
+			float x = pentagons[selectedPentagon].innerPentagon[j].x * 1500; 
+			float y = pentagons[selectedPentagon].innerPentagon[j].y * 1500;
+			float z = pentagons[selectedPentagon].innerPentagon[j].z * 1500;
 
-		//for (int i = 0; i < 12; i++) // loop through the 12 pentagons
-		//{
-			parent.beginShape();	
-			parent.texture(parent.symbols[selectedPentagon]);
-			for (int j = 0; j < 5; j++) // loop through each pentagon's vertices										
-			{
-				//1200 is an arbitrary distance closer than 2000
-				float x = pentagons[selectedPentagon].innerPentagon[j].x * 1500; 
-				float y = pentagons[selectedPentagon].innerPentagon[j].y * 1500;
-				float z = pentagons[selectedPentagon].innerPentagon[j].z * 1500;
+			// generate uv texture mapping coordinates for square to pentagon				
+			float u = 0, v = 0;
 
-				// generate uv texture mapping coordinates for square to pentagon				
-				float u = 0, v = 0;
+			/*
+			 * (from wolfram alpha) coordinates of a pentagon inscribed in
+			 * unit circle 0,-1 0.951,-0.309 0.588,0.809 -0.588,0.809
+			 * -0.951,-0.309
+			 */
 
-				/*
-				 * (from wolfram alpha) coordinates of a pentagon inscribed in
-				 * unit circle 0,-1 0.951,-0.309 0.588,0.809 -0.588,0.809
-				 * -0.951,-0.309
-				 */
+			switch (j) {
+			case 3: // top of each pentagon
+				u = 0;
+				v = -1;
+				break;
+			case 4:
+				u = 0.951f;
+				v = -0.309f;
+				break;
+			case 0:
+				u = 0.588f;
+				v = 0.809f;
+				break;
+			case 1:
+				u = -0.588f;
+				v = 0.809f;
+				break;
+			case 2:
+				u = -0.951f;
+				v = -0.309f;
+				break;
+			}
 
-				switch (j) {
-				case 3: // top of each pentagon
-					u = 0;
-					v = -1;
-					break;
-				case 4:
-					u = 0.951f;
-					v = -0.309f;
-					break;
-				case 0:
-					u = 0.588f;
-					v = 0.809f;
-					break;
-				case 1:
-					u = -0.588f;
-					v = 0.809f;
-					break;
-				case 2:
-					u = -0.951f;
-					v = -0.309f;
-					break;
-				}
-
-				// (n + 1) / 2 centers the texture
-				parent.vertex(x, y, z, (u + 1) / 2, (v + 1) / 2); 																	
-			}			
-			parent.endShape(PConstants.CLOSE);
-		//}
+			// (n + 1) / 2 centers the texture
+			_parent.vertex(x, y, z, (u + 1) / 2, (v + 1) / 2); 																	
+		}			
+		_parent.endShape(PConstants.CLOSE);	
 	}
 	
 	void drawTapIndicator() {
-		parent.noFill();		
-		parent.noStroke();	
+		_parent.noFill();		
+		_parent.noStroke();	
 
 		// single finger tap lights panel and fades for 500 milliseconds
 		if (tap == 1) {
-			parent.fill(255, 256 - ((parent.millis() - millisAtTap)*(256f/500)));
+			_parent.fill(255, 256 - ((_parent.millis() - millisAtTap)*(256f/500)));
 		}
 
 		// double finger tap darkens panel and fades for 500 milliseconds
 		if (tap == 2) {
-			parent.fill(0, 256 - ((parent.millis() - millisAtTap)*(256f/500)));
+			_parent.fill(0, 256 - ((_parent.millis() - millisAtTap)*(256f/500)));
 		}
 
 		// reset the animation
-		if (parent.millis() - millisAtTap > 500) {
+		if (_parent.millis() - millisAtTap > 500) {
 			tap = 0;
 			return;
 		}				
 
 		// draw the translucent indicator pentagon over the face corresponding to the delta played
-		parent.beginShape();
+		_parent.beginShape();
 		for (int i = 0; i < 5; i++) // loop through the pentagon's vertices
 		{
-			float x = pentagons[PApplet.abs((parent.deltaHistory.deltas[0]))].vertices[i].x * 1200;
-			float y = pentagons[PApplet.abs((parent.deltaHistory.deltas[0]))].vertices[i].y * 1200;
-			float z = pentagons[PApplet.abs((parent.deltaHistory.deltas[0]))].vertices[i].z * 1200;
-			parent.vertex(x, y, z);
+			float x = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].x * 1200;
+			float y = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].y * 1200;
+			float z = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].z * 1200;
+			_parent.vertex(x, y, z);
 		}
-		parent.endShape(PConstants.CLOSE);
+		_parent.endShape(PConstants.CLOSE);
 	}	
 	
 	void getSelectedPentagon() {
@@ -284,7 +288,7 @@ public class Dodecahedron {
 			// sum the angles between the lookAt vector and each of this pentagon's 5 vertices
 			float totalAngle = 0f;
 			for (int j = 0; j < 5; j++) {
-				totalAngle += PVector.angleBetween(lookAt, pentagons[i].vertices[j]);
+				totalAngle += PVector.angleBetween(_lookAt, pentagons[i].vertices[j]);
 			}
 
 			if (totalAngle < smallestAngle) {
@@ -296,7 +300,7 @@ public class Dodecahedron {
 		// set the new selected pentagon
 		if (selectedPentagon != pentagon) {
 			// give a little nudge each time we land on a new pentagon
-			parent.vibrate();
+			_parent.vibrate();
 			
 			selectedPentagon = pentagon;
 		}
@@ -307,82 +311,86 @@ public class Dodecahedron {
 	 * @param mt the MultiTouch object contains information about what is touching the screen and when
 	 */
 	void touchControl(MultiTouch[] mt) {
-		// rotate the dodecahedron
-		xRot += xMomentum / 10000;
-		zRot -= zMomentum / 10000;
 				
-		// stop at the floor and ceiling
-		if (xRot >= PConstants.HALF_PI) {
-			xMomentum = 0;
-			xRot = PConstants.HALF_PI;
-		}
-		if (xRot <= -PConstants.HALF_PI) {
-			xMomentum = 0;
-			xRot = -PConstants.HALF_PI;
-		}
-		
 		// we have a finger on the screen
-		if (mt[0].touched) {
-			// Allow the player to stop with a tap
-			if(spun){
-				xMomentum = 0;
-				zMomentum = 0;
-				spun = false;
-				return;
-			}
-			
-			int timeBetweenTouches = (mt[0].millisAtLastMove - mt[0].prevMillis);
-			if (timeBetweenTouches > 0) { //avoid divide by zero
-				zMomentum += ((mt[0].currentX - mt[0].prevX) / timeBetweenTouches) * 180;
-				xMomentum += ((mt[0].currentY - mt[0].prevY) / timeBetweenTouches) * 120;
-			}
+		if (mt[0].touched) {				
+			fingerOnScreen(mt);
 			return;
-		}
+		}		
 		
-		// Allow the player to stop with a tap
-		if(PApplet.abs(xMomentum) + PApplet.abs(zMomentum) > 0.1f){
-			spun = true;
-		}
+		fingerReleased(mt);		
+	}
+	
+	private void fingerOnScreen(MultiTouch[] mt) {
+		_zRotPrev = zRot;
+		_xRotPrev = xRot;
 		
-		// At this point, the finger is no longer on the screen
+		zRot -= ((mt[0].currentX - mt[0].prevX)) * ((PApplet.TWO_PI * 0.8f) / _parent.screenWidth);
+		xRot += ((mt[0].currentY - mt[0].prevY)) * ((PApplet.PI * 0.8f) / _parent.screenHeight);
+		
+		stopAtFloorAndCeiling();
+		
+		// calculate momentum
+		int timeBetweenTouches = (mt[0].millisAtLastMove - mt[0].prevMillis);
+		if (timeBetweenTouches > 0) { //avoid divide by zero
+			_zMomentum = ((zRot - _zRotPrev) / timeBetweenTouches);
+			_xMomentum = ((xRot - _xRotPrev) / timeBetweenTouches);
+		}
+	}
+	
+	private void fingerReleased(MultiTouch[] mt) {
+		// rotate the dodecahedron
+		zRot += _zMomentum * 10;
+		xRot += _xMomentum * 10;		
+				
+		stopAtFloorAndCeiling();
 		
 		// Decelerate				
-		zMomentum -= zMomentum * (PApplet.abs(zMomentum) >= 50 ? 0.05 : 0.2);
-		xMomentum -= xMomentum * (PApplet.abs(xMomentum) >= 50 ? 0.05 : 0.2);
+		_zMomentum -= _zMomentum * (PApplet.abs(_zMomentum) >= 0.003f ? 0.05f : 0.1f);
+		_xMomentum -= _xMomentum * (PApplet.abs(_xMomentum) >= 0.003f ? 0.05f : 0.1f);
 		
-		//Check if we have a tap
-		final int maxMovementForTap = 10;
-		final int maxMillisBetweenTwoPointers = 200;
-		if (mt[0].totalMovement < maxMovementForTap && mt[0].tap) {
+		//Check if we have a tap		
+		if (mt[0].totalMovement < _maxMovementForTap && mt[0].tap) {
 				
 			// check to see if we have a two-finger tap and if so, how in synch the two taps are
-			if (PApplet.abs(mt[1].millisAtLastMove - mt[0].millisAtLastMove) < maxMillisBetweenTwoPointers && mt[1].tap) {
+			if (PApplet.abs(mt[1].millisAtLastMove - mt[0].millisAtLastMove) < _maxMillisBetweenTwoPointers && mt[1].tap) {
 				tap = 2;
-				parent.doubleTap();
+				_parent.doubleTap();
 			} else {
 				if (mt[0].id == 0) {
 					tap = 1;
-					parent.singleTap();
+					_parent.singleTap();
 				}
 			}
 			mt[0].tap = false;
 			mt[1].tap = false;
-			millisAtTap = parent.millis();
-		}		
+			millisAtTap = _parent.millis();
+		}
+	}
+	
+	private void stopAtFloorAndCeiling() {
+		if (xRot >= PConstants.HALF_PI) {
+			_xMomentum = 0;
+			xRot = PConstants.HALF_PI;
+		}
+		if (xRot <= -PConstants.HALF_PI) {
+			_xMomentum = 0;
+			xRot = -PConstants.HALF_PI;
+		}
 	}
 	
 	private void orientate() {
 		// initially, orient the dodecahedron room so we're not looking at the
 		// ceiling
-		parent.rotateX(-PConstants.HALF_PI);
+		_parent.rotateX(-PConstants.HALF_PI);
 
 		// now rotate according to the current rotation angles
-		parent.rotateX(xRot);
-		parent.rotateZ(zRot);
+		_parent.rotateX(xRot);
+		_parent.rotateZ(zRot);
 
 		// rotate lookAt vector in the opposite direction
-		lookAt = rotatePVectorX(PConstants.HALF_PI - xRot, new PVector(0, 0, -1));
-		lookAt = rotatePVectorZ(-zRot, lookAt);
+		_lookAt = rotatePVectorX(PConstants.HALF_PI - xRot, new PVector(0, 0, -1));
+		_lookAt = rotatePVectorZ(-zRot, _lookAt);
 	}
 	
 	static PVector rotatePVectorZ(float angle, PVector vector) {

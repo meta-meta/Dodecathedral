@@ -76,8 +76,7 @@ public class Demo {
 				reset();
 				Modes.switchMode(Mode.FREE_PLAY);
 
-				// TODO make this less hacky. this should fix the dodecahedron
-				// going crazy when switching back to free_play
+				// this fixes the dodecahedron going crazy when switching back to free_play
 				_parent.mt[0].millisAtLastMove = _parent.millis();
 				_parent.mt[1].millisAtLastMove = _parent.millis();
 				return;
