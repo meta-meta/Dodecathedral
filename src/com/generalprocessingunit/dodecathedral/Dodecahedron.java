@@ -2,6 +2,7 @@ package com.generalprocessingunit.dodecathedral;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PImage;
 import processing.core.PVector;
 
 /**Contains all the geometry, orientation, colors, textures to draw the dodecahedron. 
@@ -11,7 +12,8 @@ import processing.core.PVector;
  *
  */
 public class Dodecahedron {
-	private static Dodecathedral _parent;
+	private static PApplet _p5;
+	private static IDodecathedral _parent;
 
 	//dodecahedron geometry
 	private static final PVector[] vertices = new PVector[]{
@@ -71,6 +73,9 @@ public class Dodecahedron {
 		new Color(0xf177ff), 
 		new Color(0xd20159) };
 
+	//symbols on the panels
+	PImage[] symbols = new PImage[12];
+	
 	//orientation
 	private static PVector _lookAt = new PVector(0, 0, -1);
 	static float zRot = 0;
@@ -79,6 +84,9 @@ public class Dodecahedron {
 	private static float _xRotPrev = 0;
 	private static float _zMomentum = 0;
 	private static float _xMomentum = 0;
+	private static float[] _zMomentumBuffer = new float[2];
+	private static float[] _xMomentumBuffer = new float[2];
+	boolean touched = false;
 	
 	// tap detection
 	private static final int _maxMovementForTap = 10;
@@ -91,7 +99,8 @@ public class Dodecahedron {
 	static float[] zRotLookup = new float[12];
 	static float[] xRotLookup = new float[12];
 
-	Dodecahedron(Dodecathedral p) {
+	Dodecahedron(IDodecathedral p) {
+		_p5 = p.getPApplet();
 		_parent = p;
 
 		setRotationLookupCoordinates();
@@ -154,15 +163,15 @@ public class Dodecahedron {
 	}
 
 	private void drawColoredPanels() {
-		_parent.noStroke();
+		_p5.noStroke();
 		for (int i = 0; i < 12; i++) // loop through the 12 pentagons
 		{
 			int alpha = 169;
 			if(selectedPentagon == i){
 				alpha = 255;
 			}
-			_parent.fill(colors[i].R, colors[i].G, colors[i].B, alpha);
-			_parent.beginShape();
+			_p5.fill(colors[i].R, colors[i].G, colors[i].B, alpha);
+			_p5.beginShape();
 			for (int j = 0; j < 5; j++) // loop through each pentagon's vertices
 			{
 				//2000 is an arbitrary distance
@@ -170,37 +179,35 @@ public class Dodecahedron {
 				float y = pentagons[i].innerPentagon[j].y * 2000;
 				float z = pentagons[i].innerPentagon[j].z * 2000;
 
-				_parent.vertex(x, y, z);
+				_p5.vertex(x, y, z);
 			}
-			_parent.endShape(PConstants.CLOSE);
+			_p5.endShape(PConstants.CLOSE);
 		}
 	}
 	
 	private void drawHighlightGlass() {
-		_parent.noStroke();
+		_p5.noStroke();
 
-		_parent.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
-
-		//simpler approach
-		_parent.beginShape();
+		_p5.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
+		
+		_p5.beginShape();
 		for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
-		{
-			//2000 is an arbitrary distance
-			float x = pentagons[selectedPentagon].vertices[i].x * 1200;
-			float y = pentagons[selectedPentagon].vertices[i].y * 1200;
-			float z = pentagons[selectedPentagon].vertices[i].z * 1200;
-
-			_parent.vertex(x, y, z);
+		{						
+			//1700 is an arbitrary distance
+			float x = pentagons[selectedPentagon].vertices[i].x * 1700;
+			float y = pentagons[selectedPentagon].vertices[i].y * 1700;
+			float z = pentagons[selectedPentagon].vertices[i].z * 1700;
+			_p5.vertex(x, y, z);
 		}
-		_parent.endShape(PConstants.CLOSE);
+		_p5.endShape(PConstants.CLOSE);
 	}
 	
 	private void drawSymbols() {
-		_parent.fill(255); //needed or the texture gets tinted for some reason		
-		_parent.textureMode(PConstants.NORMAL); //our pentagon coordinates are based on the unit circle		
+		_p5.fill(127); //needed or the texture gets tinted for some reason		
+		_p5.textureMode(PConstants.NORMAL); //our pentagon coordinates are based on the unit circle		
 		
-		_parent.beginShape();	
-		_parent.texture(_parent.symbols[selectedPentagon]);
+		_p5.beginShape();	
+		_p5.texture(symbols[selectedPentagon]);
 		for (int j = 0; j < 5; j++) // loop through each pentagon's vertices										
 		{
 			//1500 is an arbitrary distance closer than 2000
@@ -241,41 +248,41 @@ public class Dodecahedron {
 			}
 
 			// (n + 1) / 2 centers the texture
-			_parent.vertex(x, y, z, (u + 1) / 2, (v + 1) / 2); 																	
+			_p5.vertex(x, y, z, (u + 1) / 2, (v + 1) / 2); 																	
 		}			
-		_parent.endShape(PConstants.CLOSE);	
+		_p5.endShape(PConstants.CLOSE);	
 	}
 	
 	void drawTapIndicator() {
-		_parent.noFill();		
-		_parent.noStroke();	
+		_p5.noFill();		
+		_p5.noStroke();	
 
 		// single finger tap lights panel and fades for 500 milliseconds
 		if (tap == 1) {
-			_parent.fill(255, 256 - ((_parent.millis() - millisAtTap)*(256f/500)));
+			_p5.fill(255, 256 - ((_p5.millis() - millisAtTap)*(256f/500)));
 		}
 
 		// double finger tap darkens panel and fades for 500 milliseconds
 		if (tap == 2) {
-			_parent.fill(0, 256 - ((_parent.millis() - millisAtTap)*(256f/500)));
+			_p5.fill(0, 256 - ((_p5.millis() - millisAtTap)*(256f/500)));
 		}
 
 		// reset the animation
-		if (_parent.millis() - millisAtTap > 500) {
+		if (_p5.millis() - millisAtTap > 500) {
 			tap = 0;
 			return;
 		}				
 
 		// draw the translucent indicator pentagon over the face corresponding to the delta played
-		_parent.beginShape();
+		_p5.beginShape();
 		for (int i = 0; i < 5; i++) // loop through the pentagon's vertices
 		{
-			float x = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].x * 1200;
-			float y = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].y * 1200;
-			float z = pentagons[PApplet.abs((_parent.deltaHistory.deltas[0]))].vertices[i].z * 1200;
-			_parent.vertex(x, y, z);
+			float x = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].x * 1700;
+			float y = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].y * 1700;
+			float z = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].z * 1700;
+			_p5.vertex(x, y, z);
 		}
-		_parent.endShape(PConstants.CLOSE);
+		_p5.endShape(PConstants.CLOSE);
 	}	
 	
 	void getSelectedPentagon() {
@@ -315,6 +322,7 @@ public class Dodecahedron {
 		// we have a finger on the screen
 		if (mt[0].touched) {				
 			fingerOnScreen(mt);
+			touched = true;
 			return;
 		}		
 		
@@ -325,11 +333,19 @@ public class Dodecahedron {
 		_zRotPrev = zRot;
 		_xRotPrev = xRot;
 		
-		zRot -= ((mt[0].currentX - mt[0].prevX)) * ((PApplet.TWO_PI * 0.8f) / _parent.screenWidth);
-		xRot += ((mt[0].currentY - mt[0].prevY)) * ((PApplet.PI * 0.8f) / _parent.screenHeight);
+		zRot -= ((mt[0].currentX - mt[0].prevX)) * ((PApplet.TWO_PI * 0.8f) / _parent.sketchWidth());
+		xRot += ((mt[0].currentY - mt[0].prevY)) * ((PApplet.PI * 0.8f) / _parent.sketchHeight());
 		
 		stopAtFloorAndCeiling();
-		
+				
+		for (int i = _zMomentumBuffer.length - 1; i > 0; i--) {
+			_zMomentumBuffer[i] = _zMomentumBuffer[i - 1];
+			_xMomentumBuffer[i] = _xMomentumBuffer[i - 1];
+		}
+
+		_zMomentumBuffer[0] = _zMomentum;
+		_xMomentumBuffer[0] = _xMomentum;	
+	
 		// calculate momentum
 		int timeBetweenTouches = (mt[0].millisAtLastMove - mt[0].prevMillis);
 		if (timeBetweenTouches > 0) { //avoid divide by zero
@@ -340,6 +356,32 @@ public class Dodecahedron {
 	
 	private void fingerReleased(MultiTouch[] mt) {
 		// rotate the dodecahedron
+		
+		if(touched){
+			float zM = 0f, xM = 0f;
+			int zI = 0, xI = 0;
+			for(int i=0; i<_zMomentumBuffer.length; i++){
+				if(zM < PApplet.abs(_zMomentumBuffer[i])){
+					zM = PApplet.abs(_zMomentumBuffer[i]);
+					zI = i;
+				}
+				if(xM < PApplet.abs(_xMomentumBuffer[i])){
+					xM = PApplet.abs(_xMomentumBuffer[i]);
+					xI = i;
+				}
+			}			
+			
+			_zMomentum = _zMomentumBuffer[zI];
+			_xMomentum = _xMomentumBuffer[xI];
+			
+			touched = false;	
+			
+			for(int i=0; i<_zMomentumBuffer.length; i++){
+				_zMomentumBuffer[i] = 0;
+				_xMomentumBuffer[i] = 0;
+			}	
+		}
+		
 		zRot += _zMomentum * 10;
 		xRot += _xMomentum * 10;		
 				
@@ -354,17 +396,17 @@ public class Dodecahedron {
 				
 			// check to see if we have a two-finger tap and if so, how in synch the two taps are
 			if (PApplet.abs(mt[1].millisAtLastMove - mt[0].millisAtLastMove) < _maxMillisBetweenTwoPointers && mt[1].tap) {
-				tap = 2;
+				//tap = 2;
 				_parent.doubleTap();
 			} else {
 				if (mt[0].id == 0) {
-					tap = 1;
+					//tap = 1;
 					_parent.singleTap();
 				}
 			}
 			mt[0].tap = false;
 			mt[1].tap = false;
-			millisAtTap = _parent.millis();
+			millisAtTap = _p5.millis();
 		}
 	}
 	
@@ -382,11 +424,11 @@ public class Dodecahedron {
 	private void orientate() {
 		// initially, orient the dodecahedron room so we're not looking at the
 		// ceiling
-		_parent.rotateX(-PConstants.HALF_PI);
+		_p5.rotateX(-PConstants.HALF_PI);
 
 		// now rotate according to the current rotation angles
-		_parent.rotateX(xRot);
-		_parent.rotateZ(zRot);
+		_p5.rotateX(xRot);
+		_p5.rotateZ(zRot);
 
 		// rotate lookAt vector in the opposite direction
 		_lookAt = rotatePVectorX(PConstants.HALF_PI - xRot, new PVector(0, 0, -1));

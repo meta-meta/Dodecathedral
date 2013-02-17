@@ -26,7 +26,7 @@ import android.view.MotionEvent;
 
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
-public class Dodecathedral extends PApplet {
+public class Dodecathedral extends PApplet implements IDodecathedral {
 
 	PureDataP5Android pd;
 
@@ -44,8 +44,6 @@ public class Dodecathedral extends PApplet {
 	//we need to preload the characters we're going to use in menus and messages
 	public static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\-+=".toCharArray(); 
 
-	PImage[] symbols = new PImage[12];
-
 	// Multi-Touch input
 	private static final int maxTouchEvents = 2;
 	MultiTouch[] mt;
@@ -58,6 +56,15 @@ public class Dodecathedral extends PApplet {
 	boolean drone = false;
     boolean starfieldOn = false;
 
+    public PApplet getPApplet()
+    {
+    	return this;
+    }
+    
+    public MultiTouch[] getMultiTouch(){
+    	return mt;
+    }
+    
 	@Override
 	public void setup() {
 		setupPD();
@@ -123,15 +130,15 @@ public class Dodecathedral extends PApplet {
 	@Override
 	public void draw() {
 		background(50);
-		float w = this.screenWidth;
-		float h = this.screenHeight;
+		float w = sketchWidth();
+		float h = sketchHeight();
 		
 		// center the screen
 		translate(w / 2, h / 2);
 		
 		// draw the starfield
 		if (starfieldOn) {
-			starfield.plot(0, 0);
+			starfield.plot(0, 0, w, h);
 		}
 			
 
@@ -195,13 +202,15 @@ public class Dodecathedral extends PApplet {
 		}
 	}
 
-	void singleTap() {
+	public void singleTap() {
 		deltaHistory.navigate(Dodecahedron.selectedPentagon, true, this.millis());
+		Dodecahedron.tap = 1;
 		playNote();
 	}
 
-	void doubleTap() {
+	public void doubleTap() {
 		deltaHistory.navigate(Dodecahedron.selectedPentagon, false, this.millis());
+		Dodecahedron.tap = 2;
 		playNote();
 	}
 
@@ -217,12 +226,14 @@ public class Dodecathedral extends PApplet {
 
 		for (int i = 0; i < 12; i++) {
 			Log.d("info", String.format("%s/%s.png", dir, i));
-			symbols[i] = loadImage(String.format("%s/%s.png", dir, i));
+			dodecahedron.symbols[i] = loadImage(String.format("%s/%s.png", dir,
+					i));
 		}
+
 		Log.d("info", "Done loading images");
 	}
 
-	void vibrate() {
+	public void vibrate() {
 		gNotificationManager.notify(1, gNotification);
 	}
 
@@ -252,7 +263,7 @@ public class Dodecathedral extends PApplet {
 	public boolean surfaceTouchEvent(MotionEvent me) {
 		// Avoid null pointer exception
 		if(null == me){
-			return super.surfaceTouchEvent(me);
+			return super.surfaceTouchEvent(null);
 		}
 		
 		// Find number of touch points:
@@ -270,7 +281,7 @@ public class Dodecathedral extends PApplet {
 		// Update MultiTouch that 'is touched':
 		for (int i = 0; i < maxTouchEvents; i++) {
 			if (i < pointers) {
-				mt[i].update(me, i, millis());
+				mt[i].update(me.getPointerId(i), me.getX(i), me.getY(i), me.getSize(i), i, millis());
 			}
 			// Update MultiTouch that 'isn't touched':
 			else {
@@ -331,5 +342,10 @@ public class Dodecathedral extends PApplet {
 
 	public String sketchRenderer() {
 		return PApplet.OPENGL;
+	}
+
+	@Override
+	public char[] getCharset() {
+		return charset;
 	}
 }

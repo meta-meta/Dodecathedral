@@ -16,7 +16,7 @@ public class MultiTouch {
 	boolean tap = false;
 
 	// Executed when this index has been touched:
-	void update(MotionEvent me, int index, int millis) {
+	void update(int pointerId, float x, float y, float size, int index, int millis) {
 		// me : The passed in MotionEvent being queried
 		// index : the index of the item being queried
 		// newId : The id of the pressed item.
@@ -28,15 +28,15 @@ public class MultiTouch {
 		prevX = currentX;
 		prevY = currentY;
 
-		currentX = me.getX(index);
-		currentY = me.getY(index);
+		currentX = x;
+		currentY = y;
 
 		// keep tabs on the total movement of this pointer
 		totalMovement += PApplet.abs(currentX - prevX);
 		totalMovement += PApplet.abs(currentY - prevY);
 
-		prevSize = size;
-		size = me.getSize(index);
+		prevSize = this.size;
+		this.size = size;
 
 		// if this is the first touch, record where it starts
 		if (!touched) {
@@ -49,7 +49,7 @@ public class MultiTouch {
 			prevSize = size;
 		}
 
-		id = me.getPointerId(index);
+		this.id = pointerId;
 		touched = true;
 	}
 

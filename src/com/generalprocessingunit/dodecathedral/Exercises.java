@@ -109,7 +109,7 @@ public class Exercises {
 		// we've played the demo for this sequence. now, change mode to INPUT so
 		// we can check what the user is playing against the sequence
 		if (Modes.currentMode != Mode.INPUT) {
-			_noteCountAtInputStart = _parent.deltaHistory.noteCount;
+			_noteCountAtInputStart = DeltaHistory.noteCount;
 			Modes.switchMode(Mode.INPUT);
 		}
 
@@ -121,7 +121,7 @@ public class Exercises {
 			return;
 		}
 
-		int numNotesPlayed = _parent.deltaHistory.noteCount - _noteCountAtInputStart;
+		int numNotesPlayed = DeltaHistory.noteCount - _noteCountAtInputStart;
 		if (numNotesPlayed == _currentSequence.deltas.size()) {
 			// WOW! You played the sequence!!!!
 			if (_sequenceIterator.hasNext()) {
@@ -136,15 +136,15 @@ public class Exercises {
 	}
 
 	private boolean checkNotesPlayed() {
-		int numNotesPlayed = _parent.deltaHistory.noteCount - _noteCountAtInputStart;	
-		if(_parent.deltaHistory.noteCount == _noteCountAtCheck)
+		int numNotesPlayed = DeltaHistory.noteCount - _noteCountAtInputStart;	
+		if(DeltaHistory.noteCount == _noteCountAtCheck)
 		{
 			return true;
 		}
 		for (int i = 0; i < numNotesPlayed; i++) {
 			// consult the deltaHistory to see if the most recent set of notes played matches up to the sequence
 			// deltaHistory is in reverse order (most recent delta played is index 0)
-			if (_currentSequence.deltas.get(i) != _parent.deltaHistory.deltas[(numNotesPlayed - 1) - i]) {
+			if (_currentSequence.deltas.get(i) != DeltaHistory.deltas[(numNotesPlayed - 1) - i]) {
 				return false;
 			}
 		}

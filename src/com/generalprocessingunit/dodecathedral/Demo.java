@@ -5,8 +5,8 @@ import processing.core.PApplet;
 import com.generalprocessingunit.dodecathedral.Modes.Mode;
 
 public class Demo {
-
-	private Dodecathedral _parent;
+	private static PApplet _p5;
+	private static IDodecathedral _parent;
 
 	boolean playing = false;
 	private DeltaSequence _sequence;
@@ -15,8 +15,9 @@ public class Demo {
 	private boolean _loop = false;
 	private int _millisAtNoteLastPlayed = 0;
 
-	Demo(PApplet parent) {
-		_parent = (Dodecathedral) parent;
+	Demo(IDodecathedral p) {
+		_parent = p;
+		_p5 = p.getPApplet();
 	}
 
 	void setSequence(DeltaSequence sequence) {
@@ -34,11 +35,11 @@ public class Demo {
 
 	void playSequence() {
 		final int minElapsedMillis = (int) (1000 / (_bpm / 60));
-		final int millisNow = _parent.millis();
+		final int millisNow = _p5.millis();
 
 		// -1 is the reset position
 		if (_sequencePosition == -1) {
-			_parent.deltaHistory.currentNote = 0;
+			DeltaHistory.currentNote = 0;
 			_sequencePosition = 0;
 		}
 
@@ -54,7 +55,7 @@ public class Demo {
 
 			// get the dodecahedron in place then play the note
 			if (rotateDodecahedron(PApplet.abs(delta), 0.3f, 0.1f) && elapsedMillis > minElapsedMillis * _sequence.rhythm.get(_sequencePosition)) {
-				Dodecahedron.millisAtTap = _parent.millis();
+				Dodecahedron.millisAtTap = _p5.millis();
 				_millisAtNoteLastPlayed = millisNow;
 				if (delta >= 0) {
 					Dodecahedron.tap = 1;
@@ -70,15 +71,15 @@ public class Demo {
 
 		// if we've reached the end of the sequence either loop or stop playing
 		if (_sequencePosition == _sequence.deltas.size()) {
-			_parent.deltaHistory.currentNote = 0;
+			DeltaHistory.currentNote = 0;
 			if (!_loop) {
 				playing = false;
 				reset();
 				Modes.switchMode(Mode.FREE_PLAY);
 
 				// this fixes the dodecahedron going crazy when switching back to free_play
-				_parent.mt[0].millisAtLastMove = _parent.millis();
-				_parent.mt[1].millisAtLastMove = _parent.millis();
+				_parent.getMultiTouch()[0].millisAtLastMove = _p5.millis();
+				_parent.getMultiTouch()[1].millisAtLastMove = _p5.millis();
 				return;
 			} else {
 				_sequencePosition = -1;

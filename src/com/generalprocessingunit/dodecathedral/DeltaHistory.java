@@ -8,12 +8,13 @@ package com.generalprocessingunit.dodecathedral;
  * @author Paul M. Christian
  */
 public class DeltaHistory {
-	int[] notes;
-	int[] deltas;
-	int[] millis;
 	static final int historyLength = 100;
-	int noteCount = 0;
-	int currentNote;
+	
+	static int[] notes;
+	static int[] deltas;
+	static int[] millis;	
+	static int noteCount = 0;
+	static int currentNote;
 
 	DeltaHistory() {
 		this(0);
@@ -29,7 +30,7 @@ public class DeltaHistory {
 	void navigate(int selectedInterval, boolean up, int millis) {
 		updateHistory(notes, currentNote);
 		updateHistory(deltas, up ? selectedInterval : -selectedInterval);
-		updateHistory(this.millis, millis);
+		updateHistory(DeltaHistory.millis, millis);
 
 		if (up) {
 			currentNote = deltaAddition(currentNote, selectedInterval);

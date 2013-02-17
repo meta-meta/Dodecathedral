@@ -1,12 +1,5 @@
 package com.generalprocessingunit.dodecathedral;
 
-import java.util.Map;
-
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
-
-import com.google.gson.Gson;
 
 //consider: http://developer.android.com/reference/android/os/AsyncTask.html
 //http://stackoverflow.com/questions/8693778/taking-heavy-computation-off-the-android-ui-thread

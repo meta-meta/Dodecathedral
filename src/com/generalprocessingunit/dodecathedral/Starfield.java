@@ -13,7 +13,7 @@ import processing.core.PVector;
  * 
  */
 public class Starfield {
-	private Dodecathedral _parent;
+	private static PApplet _p5;	
 	
 	private static final Color stroke = new Color(255, 255, 255, 255);
 	//private static final Color fill = new Color(127, 127, 127, 127);
@@ -22,8 +22,8 @@ public class Starfield {
 	private static PVector[] stars = new PVector[50];
 	private int[] millisAtSpawn = new int[50];
 	
-	Starfield(Dodecathedral parent) {
-		_parent = parent;
+	Starfield(IDodecathedral d) {
+		_p5 = d.getPApplet();
 		generateVectors();
 	}
 	
@@ -41,68 +41,69 @@ public class Starfield {
 		stars[i].x = PApplet.cos(theta) * v;
 		stars[i].y = PApplet.sin(theta) * v;
 			
-		millisAtSpawn[i] = _parent.millis();
+		millisAtSpawn[i] = _p5.millis();
 	}
 
-	void plot(float x, float y) {
-		_parent.stroke(255);
-		_parent.strokeWeight(3);		
+	void plot(float x, float y, float w, float h) {
+		_p5.stroke(255);
+		_p5.strokeWeight(3);		
 		
-		_parent.hint(PConstants.DISABLE_DEPTH_MASK);
+		_p5.hint(PConstants.DISABLE_DEPTH_MASK);
 				
-		for (int i = 0; i < 15; i++) {
-			int millis = _parent.millis() - millisAtSpawn[i];
+		for (int i = 0; i < stars.length/3; i++) {
+			int millis = _p5.millis() - millisAtSpawn[i];
 
 			float newX = x + (stars[i].x) * millis;
 			float newY = y + (stars[i].y) * millis;
 
-			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
+			if (Math.abs(newX) < w/2 && Math.abs(newY) < w/2) {
 				
-				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
+				_p5.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
+				//_p5.point(newX, newY);
+			} else {
+				generateVector(i);
+			}
+		}
+		
+		_p5.stroke(127);
+		_p5.strokeWeight(3);		
+		
+		for (int i = stars.length/3; i < 2 * stars.length/3 ; i++) {
+			int millis = _p5.millis() - millisAtSpawn[i];
+
+			float newX = x + (stars[i].x) * millis;
+			float newY = y + (stars[i].y) * millis;
+
+			if (Math.abs(newX) < w/2 && Math.abs(newY) < w/2) {
+				
+				_p5.line(newX*0.98f , newY*0.98f - 50, newX,newY-50);
+				//_p5.point(newX, newY);
 				//_parent.point(newX, newY);
 			} else {
 				generateVector(i);
 			}
 		}
 		
-		_parent.stroke(127);
-		_parent.strokeWeight(3);		
+		_p5.stroke(127);
+		_p5.strokeWeight(3);		
 		
-		for (int i = 15; i < 30; i++) {
-			int millis = _parent.millis() - millisAtSpawn[i];
+		for (int i = 2 * stars.length/3; i < stars.length; i++) {
+			int millis = _p5.millis() - millisAtSpawn[i];
 
 			float newX = x + (stars[i].x) * millis;
 			float newY = y + (stars[i].y) * millis;
 
-			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
+			if (Math.abs(newX) < w/2 && Math.abs(newY) < w/2) {
 				
-				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
+				_p5.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
+				//_p5.point(newX, newY);
 				//_parent.point(newX, newY);
 			} else {
 				generateVector(i);
 			}
 		}
 		
-		_parent.stroke(127);
-		_parent.strokeWeight(3);		
-		
-		for (int i = 30; i < stars.length; i++) {
-			int millis = _parent.millis() - millisAtSpawn[i];
-
-			float newX = x + (stars[i].x) * millis;
-			float newY = y + (stars[i].y) * millis;
-
-			if (Math.abs(newX) < 400 && Math.abs(newY) < 400) {
-				
-				_parent.line(newX*0.98f , newY*0.98f - 50,newX,newY-50);
-				//_parent.point(newX, newY);
-			} else {
-				generateVector(i);
-			}
-		}
-		
-		_parent.hint(PConstants.ENABLE_DEPTH_MASK);
-		
+		_p5.hint(PConstants.ENABLE_DEPTH_MASK);		
 	}
 	
 	
