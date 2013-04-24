@@ -1,0 +1,35 @@
+#N canvas 828 149 1021 424 16;
+#X obj 95 48 inlet;
+#X text 167 47 input frequency;
+#X obj 244 95 expr exp(-pow(log($f1/600)/log(2) \, 2)/5.12);
+#X text 267 124 expr exp(-pow(log(x/[center freq])/log(2) \, 2)/[2*sq(sigma)])
+;
+#X obj 87 312 outlet~;
+#X obj 65 176 osc~;
+#X obj 82 259 *~;
+#X obj 169 150 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 242 187 1;
+#X msg 321 208 0;
+#X obj 348 168 delay 10;
+#X obj 187 261 adsr 1 20 50 45 500;
+#X obj 551 178 r attack;
+#X obj 574 204 r decay;
+#X obj 608 229 r sustain;
+#X obj 654 257 r release;
+#X connect 0 0 2 0;
+#X connect 0 0 5 0;
+#X connect 0 0 7 0;
+#X connect 2 0 11 1;
+#X connect 5 0 6 0;
+#X connect 6 0 4 0;
+#X connect 7 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 11 0;
+#X connect 9 0 11 0;
+#X connect 10 0 9 0;
+#X connect 11 0 6 1;
+#X connect 12 0 11 2;
+#X connect 13 0 11 3;
+#X connect 14 0 11 4;
+#X connect 15 0 11 5;
