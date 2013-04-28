@@ -1,9 +1,6 @@
 package com.generalprocessingunit.dodecathedral.core;
 
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PGraphics;
-import processing.core.PVector;
+import processing.core.*;
 
 /**
  * Author: Paul
@@ -15,17 +12,11 @@ public class AbstractDodecathedral extends PApplet implements IDodecathedral {
     UserData userData = new UserData();
     private static boolean drone = false;
 
-    PGraphics bg;
-
     // we need to preload the characters we're going to use in menus and messages
     private static final char[] charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!'\"(){}[]/\\-+=".toCharArray();
 
     // Multi-Touch input
     public MultiTouch[] mt;
-
-    int i=0;
-
-    PVector[] stars = new PVector[1000];
 
     @Override
     public void setup() {
@@ -34,21 +25,12 @@ public class AbstractDodecathedral extends PApplet implements IDodecathedral {
         setupMultiTouch();
 
         loadImages();
+        Dodecahedron.createGeometry(this);
 
         MenuManager.loadFonts(this, charset);
         Message.loadFonts(this, charset);
-
-
-        for(int i=0;i<1000;i++)
-        {
-            stars[i] = new PVector();
-            stars[i].x = random(2000,5000)*random(-1,1);
-            stars[i].y = random(2000,5000)*random(-1,1);
-            stars[i].z = random(2000,5000)*random(-1,1);
-        }
-        bg = createGraphics(width,height, P3D);
-        bg.blendMode(PConstants.ADD);
     }
+
 
     public PApplet getPApplet()
     {
@@ -74,51 +56,19 @@ public class AbstractDodecathedral extends PApplet implements IDodecathedral {
 
     @Override
     public void draw() {
-        background(40);
-//        noStroke();
-//
-//        fill(40,50);
-//
-//        hint(PConstants.DISABLE_DEPTH_MASK);
-//        rect(0,0,width,height);
-//        hint(PConstants.ENABLE_DEPTH_MASK);
-
-       /* // draw the starfield
-        i++;
-        i=i%61;
-
-        bg.beginDraw();
-        bg.fill(100*(i>35?1:0f),1);
-        bg.rect(0,0,width,height);
-
-        bg.translate(width / 2, height / 2);
-
-        Starfield.plot(this, bg, 0, 0, width, height+5);
-
-
-        bg.endDraw();
-
-        hint(PConstants.DISABLE_DEPTH_MASK);
-        //tint(200,200,255,200);
-        image(bg,0,0);
-        hint(PConstants.ENABLE_DEPTH_MASK);*/
+        background(20);
 
         // center the screen
         translate(width / 2, height / 2);
 
         // draw the dodecahedron room
-
         pushMatrix();
         Dodecahedron.plot(this, this);
-
-//        stroke(255);
-//        for (int i=0;i<1000;i++) {
-//            point(stars[i].x,stars[i].y,stars[i].z);
-//        }
+        perspective();
         popMatrix();
 
 
-
+        blendMode(PConstants.BLEND);
 
         // decenter the screen
         translate(-width / 2, -height / 2);
@@ -169,15 +119,17 @@ public class AbstractDodecathedral extends PApplet implements IDodecathedral {
 
     @Override
     public void singleTap() {
-        DeltaHistory.navigate(Dodecahedron.selectedPentagon, true, this.millis());
+        DeltaHistory.navigate(Dodecahedron.selectedPentagon, true, millis());
         Dodecahedron.tapIndicator = 1;
+        Dodecahedron.millisAtTap = millis();
         playNote();
     }
 
     @Override
     public void doubleTap() {
-        DeltaHistory.navigate(Dodecahedron.selectedPentagon, false, this.millis());
+        DeltaHistory.navigate(Dodecahedron.selectedPentagon, false, millis());
         Dodecahedron.tapIndicator = 2;
+        Dodecahedron.millisAtTap = millis();
         playNote();
     }
 

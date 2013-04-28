@@ -53,13 +53,10 @@ public class Demo {
 
 			// get the dodecahedron in place then play the note
 			if (rotateDodecahedron(PApplet.abs(delta), 0.3f, 0.1f) && elapsedMillis > minElapsedMillis * _sequence.rhythm.get(_sequencePosition)) {
-				Dodecahedron.millisAtTap = _p5.millis();
 				_millisAtNoteLastPlayed = millisNow;
 				if (delta >= 0) {
-					Dodecahedron.tapIndicator = 1;
 					_parent.singleTap();
 				} else {
-					Dodecahedron.tapIndicator = 2;
 					_parent.doubleTap();
 				}
 

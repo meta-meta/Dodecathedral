@@ -79,7 +79,7 @@ public class MenuItem {
                 _itemText = dodecathedral.toggleDrone()? "Stop Drone" : "Play Drone";
                 break;
             case TOGGLE_STARFIELD:
-                _itemText = Starfield.toggleStarfield() ? "Starfield Off" : "Starfield On";
+                _itemText = Stars.toggleStarfield() ? "Stars Off" : "Stars On";
                 break;
             case RANDOM_EXERCISE:
                 Exercises.setRandomExercise(3);

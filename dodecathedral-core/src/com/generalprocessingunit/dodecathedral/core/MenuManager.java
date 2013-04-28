@@ -34,7 +34,7 @@ public class MenuManager {
         items.add(new MenuItem(MenuItem.MenuItemType.MENU, "Church Modes", "Church Modes" ));
         items.add(new MenuItem(MenuItem.MenuItemType.MENU, "Melodies", "Melodies" ));
         items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Play Drone", "TOGGLE_DRONE" ));
-        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Starfield Off", "TOGGLE_STARFIELD" ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Stars Off", "TOGGLE_STARFIELD" ));
         items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Simon", "RANDOM_EXERCISE" ));
         items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Quit Exercise", "QUIT_EXERCISE" ));
         _menus.put("Main Menu", new Menu(items, "Main Menu"));

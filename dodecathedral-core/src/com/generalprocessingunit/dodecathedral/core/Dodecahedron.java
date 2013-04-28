@@ -1,9 +1,6 @@
 package com.generalprocessingunit.dodecathedral.core;
 
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PImage;
-import processing.core.PVector;
+import processing.core.*;
 
 /**Contains all the geometry, orientation, colors, textures to draw the dodecahedron. 
  * Manages touch control to rotate and play the dodecahedron.
@@ -37,39 +34,40 @@ public class Dodecahedron {
 		new PVector(-0.188f*scale, -0.577f*scale, -0.795f*scale),
 		new PVector(0.491f*scale, -0.357f*scale, -0.795f*scale)
 	};
-	
-	private static final Pentagon[] pentagons = new Pentagon[]{
-		// assign vertices to the correct pentagons. 
+
+    //colors of the panels
+    private static final Color[] colors = new Color[]{
+        new Color(0xFF0000),
+        new Color(0xff6c00),
+        new Color(0xffe400),
+        new Color(0x80ff00),
+        new Color(0x06c229),
+        new Color(0x00fea7),
+        new Color(0x00ffff),
+        new Color(0x008eff),
+        new Color(0x0016ff),
+        new Color(0x8000ff),
+        new Color(0xf177ff),
+        new Color(0xd20159)};
+
+    private static final Pentagon[] pentagons = new Pentagon[]{
+		// assign vertices to the correct pentagons.
 		//Order matters here!
-		new Pentagon(new int[] { 0, 1, 2, 3, 4 }, vertices),
-		new Pentagon(new int[] { 0, 1, 6, 10, 5 }, vertices),
-		new Pentagon(new int[] { 1, 2, 7, 11, 6 }, vertices),
-		new Pentagon(new int[] { 2, 3, 8, 12, 7 }, vertices),
-		new Pentagon(new int[] { 3, 4, 9, 13, 8 }, vertices),
-		new Pentagon(new int[] { 4, 0, 5, 14, 9 }, vertices),		
-		new Pentagon(new int[] { 15, 16, 17, 18, 19 }, vertices),
-		new Pentagon(new int[] { 18, 19, 14, 9, 13 }, vertices),
-		new Pentagon(new int[] { 17, 18, 13, 8, 12 }, vertices),
-		new Pentagon(new int[] { 16, 17, 12, 7, 11 }, vertices),
-		new Pentagon(new int[] { 15, 16, 11, 6, 10 }, vertices),
-		new Pentagon(new int[] { 19, 15, 10, 5, 14 }, vertices)
+		new Pentagon(new int[] { 0, 1, 2, 3, 4 }, vertices, colors[0]),
+		new Pentagon(new int[] { 0, 1, 6, 10, 5 }, vertices, colors[1]),
+		new Pentagon(new int[] { 1, 2, 7, 11, 6 }, vertices, colors[2]),
+		new Pentagon(new int[] { 2, 3, 8, 12, 7 }, vertices, colors[3]),
+		new Pentagon(new int[] { 3, 4, 9, 13, 8 }, vertices, colors[4]),
+		new Pentagon(new int[] { 4, 0, 5, 14, 9 }, vertices, colors[5]),
+		new Pentagon(new int[] { 15, 16, 17, 18, 19 }, vertices, colors[6]),
+		new Pentagon(new int[] { 18, 19, 14, 9, 13 }, vertices, colors[7]),
+		new Pentagon(new int[] { 17, 18, 13, 8, 12 }, vertices, colors[8]),
+		new Pentagon(new int[] { 16, 17, 12, 7, 11 }, vertices, colors[9]),
+		new Pentagon(new int[] { 15, 16, 11, 6, 10 }, vertices, colors[10]),
+		new Pentagon(new int[] { 19, 15, 10, 5, 14 }, vertices, colors[11])
 	};
+
 	public static int selectedPentagon = 0;
-	
-	//colors of the panels
-	private static final Color[] colors = new Color[] { 
-		new Color(0xFF0000), 
-		new Color(0xff6c00), 
-		new Color(0xffe400), 
-		new Color(0x80ff00), 
-		new Color(0x06c229), 
-		new Color(0x00fea7), 
-		new Color(0x00ffff),
-		new Color(0x008eff), 
-		new Color(0x0016ff), 
-		new Color(0x8000ff), 
-		new Color(0xf177ff), 
-		new Color(0xd20159) };
 
     /* UV coordinates of the pentagons for texturing
      * (from wolfram alpha) coordinates of a pentagon inscribed in
@@ -77,8 +75,8 @@ public class Dodecahedron {
      * -0.951,-0.309
      * (n + 1) / 2 centers the texture
      */
-    private static final float[] textureU = {(0.588f+1)/2, (-0.588f+1)/2, (-0.951f+1)/2, (0f+1)/2, (0.951f+1)/2};
-    private static final float[] textureV = {(0.809f+1)/2, (0.809f+1)/2, (-0.309f+1)/2, (-1f+1)/2, (-0.309f+1)/2};
+    protected static final float[] textureU = {(0.588f+1)/2, (-0.588f+1)/2, (-0.951f+1)/2, (0f+1)/2, (0.951f+1)/2};
+    protected static final float[] textureV = {(0.809f+1)/2, (0.809f+1)/2, (-0.309f+1)/2, (-1f+1)/2, (-0.309f+1)/2};
 
     //symbols on the panels
 	public static PImage[] symbols = new PImage[12];
@@ -105,6 +103,9 @@ public class Dodecahedron {
 	// rotation coordinates for each panel so the computer can play
 	static final float[] zRotLookup = new float[12];
 	static final float[] xRotLookup = new float[12];
+
+
+
 
 	static {
 		// set the rotation coordinates for each panel
@@ -147,6 +148,14 @@ public class Dodecahedron {
 
     private Dodecahedron(IDodecathedral p) {}
 
+    public static void createGeometry(PApplet p5) {
+        for (int i = 0; i < 12; i++) {
+            pentagons[i].createGeometry(p5, i, colors[i]);
+        }
+
+        Stars.createGeometry(p5);
+    }
+
 	/**Draws the dodecahedron.
 	 * This method gets called in the game loop.
 	 */
@@ -156,114 +165,22 @@ public class Dodecahedron {
         float fov = PApplet.PI/2.7f;
         float cameraZ = (p5.height/2.0f) / PApplet.tan(fov/2.0f);
         float backedUp = 1500f;
-        p5.perspective(fov, 1.05f*(float)(p5.width)/(float)p5.height, cameraZ/10f, cameraZ*10000f);
+        p5.perspective(fov, 1.05f*(float)(p5.width)/(float)p5.height, cameraZ/10f, cameraZ*100000f);
         p5.camera(-_lookAt.x * backedUp, -_lookAt.y * backedUp, -_lookAt.z * backedUp, _lookAt.x, _lookAt.y, _lookAt.z, 0f, 0f, 1f);
 
+        Stars.plot(p5);
+
 		getSelectedPentagon(parent);
-		drawColoredPanels(p5);
-		drawSelectedSymbol(p5);
-		drawHighlightGlass(p5);
-		drawTapIndicator(p5);
-
-
-        p5.perspective();
+		drawPanels(p5);
 	}
 
-	private static void drawColoredPanels(PApplet p5) {
-
-		for (int i = 0; i < 12; i++) // loop through the 12 pentagons
-		{
-			if(selectedPentagon == i){
-                p5.noStroke();
-                p5.fill(colors[i].R, colors[i].G, colors[i].B, 255);
-			}
-            else{
-//                p5.stroke(50);
-//                p5.strokeWeight(8);
-//                p5.fill(0.75f*colors[i].R, 0.75f*colors[i].G, 0.75f*colors[i].B, 50);
-
-                p5.strokeWeight(4);
-                p5.noFill();
-                p5.stroke(0.75f*colors[i].R, 0.75f*colors[i].G, 0.75f*colors[i].B);
-            }
-
-			p5.beginShape();
-			for (int j = 0; j < 5; j++) // loop through each pentagon's vertices
-			{
-				float x = pentagons[i].innerPentagon[j].x;
-				float y = pentagons[i].innerPentagon[j].y;
-				float z = pentagons[i].innerPentagon[j].z;
-
-				p5.vertex(x, y, z);
-			}
-			p5.endShape(PConstants.CLOSE);
-		}
+	private static void drawPanels(PApplet p5) {
+        for (int i = 0; i < 12; i++)
+        {
+            pentagons[i].drawPanel(p5, i == selectedPentagon, i == PApplet.abs(DeltaHistory.deltas[0]) ? tapIndicator : 0, millisAtTap);
+        }
 	}
-	
-	private static void drawHighlightGlass(PApplet p5) {
-		p5.noStroke();
-		p5.fill(colors[selectedPentagon].R, colors[selectedPentagon].G, colors[selectedPentagon].B, 127);
-		
-		p5.beginShape();
-		for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
-		{						
-			float x = pentagons[selectedPentagon].vertices[i].x;
-			float y = pentagons[selectedPentagon].vertices[i].y;
-			float z = pentagons[selectedPentagon].vertices[i].z;
-			p5.vertex(x, y, z);
-		}
-		p5.endShape(PConstants.CLOSE);
-	}
-	
-	private static void drawSelectedSymbol(PApplet p5) {
-        p5.noStroke();
-		p5.fill(127); //needed or the texture gets tinted for some reason
-		p5.textureMode(PConstants.NORMAL); //our pentagon coordinates are based on the unit circle
-		
-		p5.beginShape();
-		p5.texture(symbols[selectedPentagon]);
-		for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
-		{
-			float x = pentagons[selectedPentagon].innerPentagon[i].x;
-			float y = pentagons[selectedPentagon].innerPentagon[i].y;
-			float z = pentagons[selectedPentagon].innerPentagon[i].z;
 
-			p5.vertex(x, y, z, textureU[i], textureV[i]);
-		}			
-		p5.endShape(PConstants.CLOSE);
-	}
-	
-	static void drawTapIndicator(PApplet p5) {
-		p5.noFill();
-		p5.noStroke();
-
-		// single finger tapIndicator lights panel and fades for 500 milliseconds
-		if (tapIndicator == 1) {
-			p5.fill(255, 256 - ((p5.millis() - millisAtTap) * (256f / 500)));
-		}
-
-		// double finger tapIndicator darkens panel and fades for 500 milliseconds
-		if (tapIndicator == 2) {
-			p5.fill(0, 256 - ((p5.millis() - millisAtTap) * (256f / 500)));
-		}
-
-		// reset the animation
-		if (p5.millis() - millisAtTap > 500) {
-			tapIndicator = 0;
-			return;
-		}				
-
-		// draw the translucent indicator pentagon over the face corresponding to the delta played
-		p5.beginShape();
-		for (int i = 0; i < 5; i++) // loop through the pentagon's vertices
-		{
-			float x = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].x;
-			float y = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].y;
-			float z = pentagons[PApplet.abs((DeltaHistory.deltas[0]))].vertices[i].z;
-			p5.vertex(x, y, z);
-		}
-		p5.endShape(PConstants.CLOSE);
-	}	
 	
 	static void getSelectedPentagon(IDodecathedral dodecathedral) {
 		float smallestAngle = 10000f; // arbitrary large number
@@ -389,7 +306,6 @@ public class Dodecahedron {
 			}
 			mt[0].tap = false;
 			mt[1].tap = false;
-			millisAtTap = p5.millis();
 		}
 	}
 	
