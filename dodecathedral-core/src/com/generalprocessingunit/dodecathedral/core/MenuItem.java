@@ -89,6 +89,9 @@ public class MenuItem {
                 Exercises.running = false;
                 Modes.switchMode(Modes.Mode.FREE_PLAY);
                 break;
+            case TOGGLE_FAST_GRAPHICS:
+                _itemText = (Dodecahedron.fasterGraphics ^= true) ?  "Slower Graphics" : "Faster Graphics";
+                break;
         }
     }
 

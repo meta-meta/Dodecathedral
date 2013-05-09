@@ -15,6 +15,7 @@ import processing.core.PShape;
 public class Stars {
     private static boolean _starfieldOn = true;
     private static PShape stars;
+    private static final int numberOfStars = 50;
 
 	private Stars() {}
 
@@ -25,7 +26,7 @@ public class Stars {
         stars.noFill();
         stars.strokeWeight(5);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < numberOfStars; i++) {
             float u = p5.random(1);
             float v = p5.random(1);
             float theta = 2 * PConstants.PI * u;

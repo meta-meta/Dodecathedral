@@ -33,10 +33,11 @@ public class MenuManager {
         items.add(new MenuItem(MenuItem.MenuItemType.MENU, "Arpeggios", "Arpeggios" ));
         items.add(new MenuItem(MenuItem.MenuItemType.MENU, "Church Modes", "Church Modes" ));
         items.add(new MenuItem(MenuItem.MenuItemType.MENU, "Melodies", "Melodies" ));
-        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Play Drone", "TOGGLE_DRONE" ));
-        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Stars Off", "TOGGLE_STARFIELD" ));
-        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Simon", "RANDOM_EXERCISE" ));
-        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Quit Exercise", "QUIT_EXERCISE" ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Play Drone", Command.TOGGLE_DRONE.name() ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Stars Off", Command.TOGGLE_STARFIELD.name() ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Simon", Command.RANDOM_EXERCISE.name() ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Quit Exercise", Command.QUIT_EXERCISE.name() ));
+        items.add(new MenuItem(MenuItem.MenuItemType.COMMAND, "Faster Graphics", Command.TOGGLE_FAST_GRAPHICS.name() ));
         _menus.put("Main Menu", new Menu(items, "Main Menu"));
 
         // Arpeggios

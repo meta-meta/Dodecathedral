@@ -99,6 +99,7 @@ public class Dodecahedron {
 	// used for tapIndicator indicator animation
 	public static int tapIndicator = 0;
 	static int millisAtTap = 0;
+    static boolean fasterGraphics = false;
 
 	// rotation coordinates for each panel so the computer can play
 	static final float[] zRotLookup = new float[12];
@@ -179,6 +180,7 @@ public class Dodecahedron {
         {
             pentagons[i].drawPanel(p5, i == selectedPentagon, i == PApplet.abs(DeltaHistory.deltas[0]) ? tapIndicator : 0, millisAtTap);
         }
+        tapIndicator = 0;
 	}
 
 	

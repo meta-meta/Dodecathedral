@@ -21,6 +21,8 @@ public class Pentagon {
     PShape lightPanel;
     PShape symbol;
     PShape highlightGlass;
+    PShape brightIndicator;
+    PShape darkIndicator;
 
     private int _tapIndicator = 0;
     private int _millisAtTap = 0;
@@ -43,6 +45,10 @@ public class Pentagon {
         createSymbolPanel(p5, index);
 
         createHighlightGlass(p5, color);
+
+        createBrightIndicator(p5, color);
+
+        createDarkIndicator(p5, color);
     }
 
     protected void drawPanel(PApplet p5, boolean selected, int tapIndicator, int millisAtTap){
@@ -56,43 +62,54 @@ public class Pentagon {
         // reset the animation
         if (p5.millis() - _millisAtTap > tapIndicatorLength && _tapIndicator != 0) {
             _tapIndicator = 0;
-            int r = color.R;
-            int g = color.G;
-            int b = color.B;
-            highlightGlass.setFill(1,p5.color(r,g,b,127));
-            highlightGlass.setFill(3,p5.color(r,g,b,127));
-            highlightGlass.setFill(4,p5.color(r,g,b,127));
-            lightPanel.setFill(p5.color(220));
+
+            if(!Dodecahedron.fasterGraphics){
+                int r = color.R;
+                int g = color.G;
+                int b = color.B;
+                highlightGlass.setFill(1,p5.color(r,g,b,127));
+                highlightGlass.setFill(3,p5.color(r,g,b,127));
+                highlightGlass.setFill(4,p5.color(r,g,b,127));
+                lightPanel.setFill(p5.color(220));
+            }
         }
 
-        // single finger tapIndicator lights panel and fades for tapIndicatorLength milliseconds
-        if (_tapIndicator == 1) {
-            float a = 255 - ((p5.millis() - _millisAtTap) * (255f / tapIndicatorLength));
-            float r = color.R + a;
-            float g = color.G + a;
-            float b = color.B + a;
-            highlightGlass.setFill(1,p5.color(r,g,b,127 + (a)));
-            highlightGlass.setFill(3,p5.color(r,g,b,127 + (a)));
-            highlightGlass.setFill(4,p5.color(r,g,b,127 + (a)));
-        }
+        if(!Dodecahedron.fasterGraphics)
+        {
+            // single finger tapIndicator lights panel and fades for tapIndicatorLength milliseconds
+            if (_tapIndicator == 1 && selected) {
+                float a = 255 - ((p5.millis() - _millisAtTap) * (255f / tapIndicatorLength));
+                float r = color.R + a;
+                float g = color.G + a;
+                float b = color.B + a;
+                highlightGlass.setFill(1,p5.color(r,g,b,127 + (a)));
+                highlightGlass.setFill(3,p5.color(r,g,b,127 + (a)));
+                highlightGlass.setFill(4,p5.color(r,g,b,127 + (a)));
+            }
 
-        // double finger tapIndicator darkens panel and fades for tapIndicatorLength milliseconds
-        if (_tapIndicator == 2) {
-            float a = 255 - ((p5.millis() - _millisAtTap) * (255f / tapIndicatorLength));
-            float r = color.R - a;
-            float g = color.G - a;
-            float b = color.B - a;
-            highlightGlass.setFill(1,p5.color(r,g,b,127 - (a)));
-            highlightGlass.setFill(3,p5.color(r,g,b,127 - (a)));
-            highlightGlass.setFill(4,p5.color(r,g,b,127 - (a)));
-            lightPanel.setFill(p5.color(220,255-a));
+            // double finger tapIndicator darkens panel and fades for tapIndicatorLength milliseconds
+            if (_tapIndicator == 2 && selected) {
+                float a = 255 - ((p5.millis() - _millisAtTap) * (255f / tapIndicatorLength));
+                float r = color.R - a;
+                float g = color.G - a;
+                float b = color.B - a;
+                highlightGlass.setFill(1,p5.color(r,g,b,127 - (a)));
+                highlightGlass.setFill(3,p5.color(r,g,b,127 - (a)));
+                highlightGlass.setFill(4,p5.color(r,g,b,127 - (a)));
+                lightPanel.setFill(p5.color(220, 255 - a));
+            }
         }
 
         if(selected){
             p5.shape(lightPanel);
             p5.shape(symbol);
             p5.blendMode(PConstants.SCREEN);
-            p5.shape(highlightGlass);
+            if(Dodecahedron.fasterGraphics && _tapIndicator != 0){
+                p5.shape(_tapIndicator == 1 ? brightIndicator : darkIndicator);
+            }
+            else{
+                p5.shape(highlightGlass);
+            }
             p5.blendMode(PConstants.BLEND);
         }
         else{
@@ -125,6 +142,38 @@ public class Pentagon {
             lightPanel.vertex(innerPentagon[i].x, innerPentagon[i].y, innerPentagon[i].z);
         }
         lightPanel.endShape(PConstants.CLOSE);
+    }
+
+    private void createBrightIndicator(PApplet p5, Color color) {
+        brightIndicator = p5.createShape();
+        brightIndicator.beginShape();
+        brightIndicator.stroke(color.R * 1.5f, color.G * 1.5f, color.B * 1.5f);
+        brightIndicator.strokeWeight(3);
+        brightIndicator.fill(220, 127);
+        for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
+        {
+            float x = vertices[i].x - center.x * 0.6f;
+            float y = vertices[i].y - center.y * 0.6f;
+            float z = vertices[i].z - center.z * 0.6f;
+            brightIndicator.vertex(x * 0.98f, y * 0.98f, z * 0.98f);
+        }
+        brightIndicator.endShape(PConstants.CLOSE);
+    }
+
+    private void createDarkIndicator(PApplet p5, Color color) {
+        darkIndicator = p5.createShape();
+        darkIndicator.beginShape();
+        darkIndicator.stroke(color.R * 1.5f, color.G * 1.5f, color.B * 1.5f);
+        darkIndicator.strokeWeight(3);
+        darkIndicator.fill(30, 127);
+        for (int i = 0; i < 5; i++) // loop through each pentagon's vertices
+        {
+            float x = vertices[i].x - center.x * 0.6f;
+            float y = vertices[i].y - center.y * 0.6f;
+            float z = vertices[i].z - center.z * 0.6f;
+            darkIndicator.vertex(x * 0.98f, y * 0.98f, z * 0.98f);
+        }
+        darkIndicator.endShape(PConstants.CLOSE);
     }
 
     private void createSymbolPanel(PApplet p5, int index) {
