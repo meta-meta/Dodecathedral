@@ -77,6 +77,23 @@ public class Dodecathedral extends AbstractDodecathedral {
     }
 
     @Override
+    public void keyPressed() {
+        if(keyCode == PConstants.DOWN)
+        {
+            Modes.switchMode(Modes.Mode.MENU);
+            return;
+        }
+
+        if(keyCode == PConstants.UP)
+        {
+            MenuManager.back();
+            return;
+        }
+
+        super.keyPressed();    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
     public void mouseReleased() {
         mt[0].update();
 
