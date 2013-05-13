@@ -82,7 +82,7 @@ public class MenuItem {
                 _itemText = Stars.toggleStarfield() ? "Stars Off" : "Stars On";
                 break;
             case RANDOM_EXERCISE:
-                Exercises.setRandomExercise(3);
+                Exercises.setExercise(new Simon(2));
                 Exercises.runExercise();
                 break;
             case QUIT_EXERCISE:

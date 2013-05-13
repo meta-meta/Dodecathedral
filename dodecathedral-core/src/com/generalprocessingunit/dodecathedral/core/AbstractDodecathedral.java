@@ -7,7 +7,7 @@ import processing.core.*;
  * Date: 4/7/13
  * Time: 2:55 PM
  */
-public class AbstractDodecathedral extends PApplet implements IDodecathedral {
+public abstract class AbstractDodecathedral extends PApplet implements IDodecathedral {
     Demo demo = new Demo(this);
     UserData userData = new UserData();
     private static boolean drone = false;
