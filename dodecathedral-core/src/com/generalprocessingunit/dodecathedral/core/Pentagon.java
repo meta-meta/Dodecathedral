@@ -117,6 +117,15 @@ public class Pentagon {
         }
     }
 
+    protected void drawAllPanels(PApplet p5){
+        p5.shape(brightIndicator);
+        p5.shape(darkIndicator);
+        p5.shape(highlightGlass);
+        p5.shape(coloredPanel);
+        p5.shape(lightPanel);
+        p5.shape(symbol);
+    }
+
     private void createColoredPanel(PApplet p5, Color color) {
         coloredPanel = p5.createShape();
         coloredPanel.beginShape();

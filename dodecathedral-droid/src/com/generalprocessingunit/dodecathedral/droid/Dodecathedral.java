@@ -13,8 +13,7 @@ import org.puredata.core.PdBase;
 import org.puredata.core.utils.IoUtils;
 import processing.core.PApplet;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Dodecathedral extends AbstractDodecathedral {
 
@@ -22,6 +21,7 @@ public class Dodecathedral extends AbstractDodecathedral {
     NotificationManager gNotificationManager;
     Notification gNotification;
     long[] gVibrate = { 0, 20 };
+
 
     @Override
     public void setup() {
@@ -52,7 +52,12 @@ public class Dodecathedral extends AbstractDodecathedral {
 
     @Override
     public void playNote() {
-        PdBase.sendFloat("pitch", DeltaHistory.getCurrentNote() + 12);
+        PdBase.sendFloat("delta", DeltaHistory.getCurrentDelta());
+    }
+
+    @Override
+    public void setNote() {
+        PdBase.sendFloat("pitch", DeltaHistory.getCurrentNote());
     }
 
     @Override
@@ -71,7 +76,7 @@ public class Dodecathedral extends AbstractDodecathedral {
         File dir = getFilesDir();
 
         try {
-            IoUtils.extractZipResource(getResources().openRawResource(com.generalprocessingunit.dodecathedral.droid.R.raw.symbols), dir, true);
+            IoUtils.extractZipResource(getResources().openRawResource(com.generalprocessingunit.dodecathedral.droid.R.raw.images), dir, true);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,6 +85,33 @@ public class Dodecathedral extends AbstractDodecathedral {
             Log.d("info", String.format("%s/%s.png", dir, i));
             Dodecahedron.symbols[i] = loadImage(String.format("%s/%s.png", dir, i));
         }
+
+
+//        InputStream ins = getResources().openRawResource(R.drawable.logo);
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        int size = 0;
+//        byte[] buffer = new byte[1024];
+//
+//        try {
+//            while ((size = ins.read(buffer, 0, 1024)) >= 0) {
+//                outputStream.write(buffer, 0, size);
+//            }
+//            ins.close();
+//            buffer = outputStream.toByteArray();
+//        } catch (Exception e) {
+//        }
+//
+//        try {
+//            File file = new File(dir, "logo.png");
+//            FileOutputStream fos = new FileOutputStream(file);
+//            fos.write(buffer);
+//            fos.close();
+//        } catch (Exception e) {
+//        }
+
+
+
+        logo = loadImage(String.format("%s/logo.png", dir));
 
         Log.d("info", "Done loading images");
     }

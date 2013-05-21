@@ -183,6 +183,12 @@ public class Dodecahedron {
         tapIndicator = 0;
 	}
 
+    static void drawAllPanels(PApplet p5){
+        for(Pentagon p : pentagons){
+            p.drawAllPanels(p5);
+        }
+    }
+
 	
 	static void getSelectedPentagon(IDodecathedral dodecathedral) {
 		float smallestAngle = 10000f; // arbitrary large number

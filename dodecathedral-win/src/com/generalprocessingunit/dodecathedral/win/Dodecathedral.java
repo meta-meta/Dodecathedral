@@ -35,7 +35,12 @@ public class Dodecathedral extends AbstractDodecathedral {
 
     @Override
     public void playNote() {
-        PdBase.sendFloat("pitch", DeltaHistory.getCurrentNote() + 12);
+        PdBase.sendFloat("delta", DeltaHistory.getCurrentDelta());
+    }
+
+    @Override
+    public void setNote() {
+        PdBase.sendFloat("pitch", DeltaHistory.getCurrentNote());
     }
 
     @Override
@@ -63,6 +68,9 @@ public class Dodecathedral extends AbstractDodecathedral {
         for (int i = 0; i < 12; i++) {
             Dodecahedron.symbols[i] = loadImage(String.format("%s.png", i));
         }
+        //logo = loadShape("logo.svg");
+        logo = loadImage("logo.png");
+
     }
 
     @Override
@@ -87,6 +95,11 @@ public class Dodecathedral extends AbstractDodecathedral {
         if(keyCode == PConstants.UP)
         {
             MenuManager.back();
+            return;
+        }
+
+        if(keyCode == PConstants.LEFT){
+            millisAtFrameZero = millis();
             return;
         }
 

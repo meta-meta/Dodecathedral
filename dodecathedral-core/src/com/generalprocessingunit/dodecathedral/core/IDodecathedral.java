@@ -18,4 +18,6 @@ public interface IDodecathedral {
 	int getSketchHeight();
 
     boolean toggleDrone();
+
+    void setNote();
 }

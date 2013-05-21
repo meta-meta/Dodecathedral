@@ -8,10 +8,13 @@ public class Demo {
 
 	static boolean playing = false;
 	private static DeltaSequence _sequence;
-	private static float _bpm = 120;
+	private static float _bpm = 60;
 	private static int _sequencePosition = -1;
 	private static boolean _loop = false;
 	private static int _millisAtNoteLastPlayed = 0;
+    private static int delay = 0;
+
+    private static boolean playedOnce = false;
 
 	public Demo(IDodecathedral p) {
 		_parent = p;
@@ -35,10 +38,26 @@ public class Demo {
 		final int minElapsedMillis = (int) (1000 / (_bpm / 60));
 		final int millisNow = _p5.millis();
 
+        // delay before we set the current note
+        if(delay > millisNow){
+            return;
+        }
+
 		// -1 is the reset position
 		if (_sequencePosition == -1) {
-			DeltaHistory.currentNote = 0;
+			DeltaHistory.setCurrentNote(0, _parent);
 			_sequencePosition = 0;
+
+            if(playedOnce  && !_loop){
+                playing = false;
+                playedOnce = false;
+
+                // this fixes the dodecahedron going crazy when switching back to free_play
+                _parent.getMultiTouch()[0].millisAtLastMove = _p5.millis();
+                _parent.getMultiTouch()[1].millisAtLastMove = _p5.millis();
+                Modes.switchMode(Modes.Mode.FREE_PLAY);
+                return;
+            }
 		}
 
 		int elapsedMillis = millisNow - _millisAtNoteLastPlayed;
@@ -66,27 +85,17 @@ public class Demo {
 
 		// if we've reached the end of the sequence either loop or stop playing
 		if (_sequencePosition == _sequence.deltas.size()) {
-			DeltaHistory.currentNote = 0;
-			if (!_loop) {
-				playing = false;
-				reset();
-				Modes.switchMode(Modes.Mode.FREE_PLAY);
-
-				// this fixes the dodecahedron going crazy when switching back to free_play
-				_parent.getMultiTouch()[0].millisAtLastMove = _p5.millis();
-				_parent.getMultiTouch()[1].millisAtLastMove = _p5.millis();
-				return;
-			} else {
-				_sequencePosition = -1;
-			}
+			reset();
+            playedOnce = true;
+            return;
 		}
 
 		playing = true;
-
 	}
 
 	static void reset() {
 		_sequencePosition = -1;
+        delay = _p5.millis() + 3000;
 	}
 
 	static boolean rotateDodecahedron(int pentagon, float zRotVelocity, float xRotVelocity) {

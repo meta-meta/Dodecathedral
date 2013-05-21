@@ -18,6 +18,11 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
     // Multi-Touch input
     public MultiTouch[] mt;
 
+    //public PShape logo;
+    public PImage logo;
+    private PShape logoRect;
+    public Integer millisAtFrameZero = null;
+
     @Override
     public void setup() {
         setupPd();
@@ -25,10 +30,29 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
         setupMultiTouch();
 
         loadImages();
+
+        createLogoRect();
+
         Dodecahedron.createGeometry(this);
+        Dodecahedron.drawAllPanels(this);
+        fill(255);
+        rect(0,0,width, height);
 
         MenuManager.loadFonts(this, charset);
         Message.loadFonts(this, charset);
+    }
+
+    private void createLogoRect() {
+        logoRect = createShape();
+        logoRect.beginShape();
+        logoRect.noStroke();
+        logoRect.texture(logo);
+        logoRect.textureMode(PConstants.NORMAL);
+        logoRect.vertex(0,0,0,0);
+        logoRect.vertex(width,0,1,0);
+        logoRect.vertex(width,height,1,1);
+        logoRect.vertex(0,height,0,1);
+        logoRect.endShape(PConstants.CLOSE);
     }
 
 
@@ -56,6 +80,8 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
 
     @Override
     public void draw() {
+        millisAtFrameZero = null == millisAtFrameZero ? millis() : millisAtFrameZero;
+
         background(20);
 
         // center the screen
@@ -70,8 +96,18 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
 
         blendMode(PConstants.BLEND);
 
+
+
         // decenter the screen
         translate(-width / 2, -height / 2);
+
+
+
+        if(millis() - millisAtFrameZero < 7000)
+        {
+            showSplashscreen();
+            return;
+        }
 
         switch (Modes.currentMode) {
             case DEMO_PLAYING:
@@ -98,7 +134,50 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
         }
     }
 
+    private void showSplashscreen() {
+
+        fill(255);
+        tint(255);
+        int millis = millis() - millisAtFrameZero;
+
+        int t = 5000;
+
+        int u = t - 2000;
+        if(millis > u)
+        {
+            fill(255, 255 - (millis-u)/15f );
+        }
+
+
+
+        float w = width, h = height, x = 0, y = 0;
+        if(millis > t)
+        {
+
+            w += (millis-t)*10f;
+            h += (millis-t)*10f;
+            x = 0;
+            y = (height - h) / 2f;
+
+        }
+
+        hint(PConstants.DISABLE_DEPTH_MASK);
+        rect(0,0,width, height);
+
+//        if(millis > t+1800){
+//            tint(255, 255 - (millis-(t + 1800))/4f );
+//        }
+
+        hint(PConstants.ENABLE_DEPTH_MASK);
+        shape(logoRect, x, y, w, h);
+
+        //image(logo, x, y, w, h);
+
+        //shape(logo, 0, 0, logo.width, logo.height );
+    }
+
     public void playNote(){}
+
 
     @Override
     public boolean toggleDrone(){

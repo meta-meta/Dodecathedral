@@ -37,7 +37,7 @@ public class MapOverlay {
 
 		float pearlRadius = size / 12;
 		for (int i = 0; i < 12; i++) {
-			if (i == DeltaHistory.currentNote) {
+			if (i == DeltaHistory.getCurrentNote()) {
 				p5.fill(stroke.R, stroke.G, stroke.B, stroke.A);
 			} else if (i == DeltaHistory.notes[0]) {
 				p5.fill(stroke.R, stroke.G, stroke.B, stroke.A - (int) ((p5.millis() - DeltaHistory.millis[0]) / 5));
@@ -52,7 +52,7 @@ public class MapOverlay {
 		int delta = PApplet.abs(DeltaHistory.deltas[0]);
 		if (delta > 1) {			
 			for (int i = 1; i < delta; i++) {
-				int note = DeltaHistory.deltaAddition(DeltaHistory.currentNote, -(DeltaHistory.deltas[0] / delta) * i);
+				int note = DeltaHistory.deltaAddition(DeltaHistory.getCurrentNote(), -(DeltaHistory.deltas[0] / delta) * i);
 
 				p5.noStroke();
 				p5.fill(0f, 127 - (int) ((p5.millis() - DeltaHistory.millis[0]) / (10 / i)));

@@ -14,7 +14,7 @@ public class DeltaHistory {
     static int[] deltas;
     static int[] millis;
     static int noteCount = 0;
-    static int currentNote;
+    private static int currentNote;
 
     private DeltaHistory() {
     }
@@ -26,8 +26,17 @@ public class DeltaHistory {
         millis = new int[historyLength];
     }
 
+    public static void setCurrentNote(int note, IDodecathedral dodecathedral){
+        currentNote = note;
+        dodecathedral.setNote();
+    }
+
     public static int getCurrentNote(){
         return currentNote;
+    }
+
+    public static int getCurrentDelta(){
+        return deltas[0];
     }
 
     public static void navigate(int selectedInterval, boolean up, int millis) {
