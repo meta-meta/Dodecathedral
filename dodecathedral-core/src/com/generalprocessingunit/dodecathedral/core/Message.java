@@ -45,7 +45,7 @@ public class Message {
 		}		
 	}
 	
-	static void showMessage(String message, MessageType messageType){
+	public static void showMessage(String message, MessageType messageType){
 		_messageType = messageType;
 		_message = message;		
 		Modes.switchMode(Modes.Mode.MESSAGE);

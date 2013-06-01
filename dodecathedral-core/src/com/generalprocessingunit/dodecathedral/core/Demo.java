@@ -21,7 +21,7 @@ public class Demo {
 		_p5 = p.getPApplet();
 	}
 
-	static void setSequence(DeltaSequence sequence) {
+	public static void setSequence(DeltaSequence sequence) {
 		_sequence = sequence;
 		reset();
 	}
@@ -95,7 +95,7 @@ public class Demo {
 
 	static void reset() {
 		_sequencePosition = -1;
-        delay = _p5.millis() + 3000;
+        delay = _p5.millis() + 2000;
 	}
 
 	static boolean rotateDodecahedron(int pentagon, float zRotVelocity, float xRotVelocity) {

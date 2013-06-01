@@ -16,8 +16,17 @@ public class Dodecathedral extends AbstractDodecathedral {
 
     @Override
     public void setup() {
-        size(1280, 720, PApplet.OPENGL);
+        size(1920, 1080, PApplet.OPENGL);
         super.setup();
+    }
+
+    @Override
+    public void draw() {
+        if(mt[0].touched){
+            mt[0].update(0, mouseX, mouseY, 0, 0, millis());
+        }
+
+        super.draw();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     @Override
@@ -113,11 +122,11 @@ public class Dodecathedral extends AbstractDodecathedral {
         super.mouseReleased();
     }
 
-    @Override
-    public void mouseDragged() {
-        mt[0].update(0, mouseX, mouseY, 0, 0, millis());
-        super.mouseDragged();
-    }
+//    @Override
+//    public void mouseDragged() {
+//        mt[0].update(0, mouseX, mouseY, 0, 0, millis());
+//        super.mouseDragged();
+//    }
 
     @Override
     public void stop() {

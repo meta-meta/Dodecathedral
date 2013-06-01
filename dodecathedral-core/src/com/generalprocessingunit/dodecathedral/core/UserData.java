@@ -14,7 +14,7 @@ public class UserData {
 		load();
 	}
 	
-	static void save(){
+	public static void save(){
 		/*SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(_parent.getApplicationContext());
 		Editor prefsEditor = appSharedPrefs.edit();		
 		
@@ -38,7 +38,7 @@ public class UserData {
 	}
 	
 	public class Data{
-		int longestRandomSequencePlayed = 0;
+		public int longestRandomSequencePlayed = 0;
 		//Map<DeltaSequence, Map<String,?>> deltaSequencesCompleted;
 		
 		

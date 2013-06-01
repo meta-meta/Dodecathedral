@@ -1,5 +1,7 @@
 package com.generalprocessingunit.dodecathedral.core;
 
+import com.generalprocessingunit.dodecathedral.core.exercises.Exercises;
+import com.generalprocessingunit.dodecathedral.core.exercises.Simon;
 import processing.core.PApplet;
 
 /**

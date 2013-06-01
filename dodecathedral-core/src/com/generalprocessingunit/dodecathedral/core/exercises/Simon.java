@@ -1,5 +1,9 @@
-package com.generalprocessingunit.dodecathedral.core;
+package com.generalprocessingunit.dodecathedral.core.exercises;
 
+import com.generalprocessingunit.dodecathedral.core.DeltaSequence;
+import com.generalprocessingunit.dodecathedral.core.DeltaSequenceCollection;
+import com.generalprocessingunit.dodecathedral.core.Message;
+import com.generalprocessingunit.dodecathedral.core.UserData;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -11,7 +15,7 @@ import java.util.List;
  * Time: 7:32 PM
  */
 public class Simon extends AbstractExercise{
-    Simon(int length){
+    public Simon(int length){
         super(getNewDeltaSequenceCollection(length), true);
     }
 

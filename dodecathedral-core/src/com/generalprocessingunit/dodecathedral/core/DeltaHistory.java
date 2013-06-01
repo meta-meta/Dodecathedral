@@ -11,9 +11,9 @@ public class DeltaHistory {
     static final int historyLength = 100;
 
     static int[] notes;
-    static int[] deltas;
+    public static int[] deltas;
     static int[] millis;
-    static int noteCount = 0;
+    public static int noteCount = 0;
     private static int currentNote;
 
     private DeltaHistory() {

@@ -1,4 +1,6 @@
-package com.generalprocessingunit.dodecathedral.core;
+package com.generalprocessingunit.dodecathedral.core.exercises;
+
+import com.generalprocessingunit.dodecathedral.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +32,12 @@ public class Exercises {
 
     private Exercises() {}
 
-    static void setExercise(IExercise exercise) {
+    public static void setExercise(IExercise exercise) {
         _currentExercise = exercise;
         _currentExercise.reset();
     }
 
-    static void setExercise(String exerciseKey){
+    public static void setExercise(String exerciseKey){
         setExercise(exerciseLibrary.get(exerciseKey));
     }
 

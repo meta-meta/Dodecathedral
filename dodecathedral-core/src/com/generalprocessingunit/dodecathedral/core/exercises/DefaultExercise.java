@@ -1,4 +1,6 @@
-package com.generalprocessingunit.dodecathedral.core;
+package com.generalprocessingunit.dodecathedral.core.exercises;
+
+import com.generalprocessingunit.dodecathedral.core.DeltaSequenceCollection;
 
 /**
  * Author: Paul

@@ -27,19 +27,19 @@
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/.idea/compiler.xml" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363058387322" ignored="false" />
     <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363143616879" ignored="false" />
-    <file path="/Dodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369110918558" ignored="false" />
+    <file path="/Dodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369187627310" ignored="false" />
     <file path="/Dummy.txt" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1366586706232" ignored="false" />
     <file path="/PdPreferences.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363145169119" ignored="false" />
     <file path="$PROJECT_DIR$/gen/com/generalprocessingunit/Dodecathedral/BuildConfig.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363458561593" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1368918652196" ignored="false" />
     <file path="/fragment.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363458633091" ignored="false" />
-    <file path="/a.dummy" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1367021648506" ignored="false" />
+    <file path="/a.dummy" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369187064901" ignored="false" />
     <file path="/UserData.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363468966813" ignored="false" />
     <file path="/DeltaSequences.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363553791274" ignored="false" />
     <file path="$PROJECT_DIR$/../dependencies/pd-for-android/PdCore/gen/org/puredata/android/service/R.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363465683004" ignored="false" />
     <file path="$PROJECT_DIR$/../dodecathedral-win/src/Dodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363468515355" ignored="false" />
     <file path="$PROJECT_DIR$/../dodecathedral-win/src/com/generalprocessingunit/dodecathedral/win/Dodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1365366948963" ignored="false" />
-    <file path="/Dodecahedron.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1367788210183" ignored="false" />
+    <file path="/Dodecahedron.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369187426129" ignored="false" />
     <file path="/DeltaHistory.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369109051589" ignored="false" />
     <file path="/MapOverlay.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363469265571" ignored="false" />
     <file path="/Starfield.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1365390557764" ignored="false" />
@@ -52,7 +52,7 @@
     <file path="/XmlResourceLoader.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363551274165" ignored="false" />
     <file path="/DeltaSequence.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1363553144820" ignored="false" />
     <file path="/IDodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1365362074765" ignored="false" />
-    <file path="/AbstractDodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369102865912" ignored="false" />
+    <file path="/AbstractDodecathedral.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369190099021" ignored="false" />
     <file path="/MenuItem.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1367788352518" ignored="false" />
     <file path="/Menu.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1365363956047" ignored="false" />
     <file path="/a.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1365364274520" ignored="false" />
@@ -312,6 +312,7 @@
     <file path="/Command.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1367788085575" ignored="false" />
     <file path="/Stars.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1367790169542" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/plugins/android/lib/android.jar!/org/jetbrains/android/android.xsd" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1368918385746" ignored="false" />
+    <file path="/AbstractExercise.java" changelist="d54ccec8-a72a-4a78-8930-331bf96a8594" time="1369187079524" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,6 +327,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -379,7 +381,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -390,19 +391,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AbstractDodecathedral.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AbstractDodecathedral.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractDodecathedral.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="61" selection-start="2580" selection-end="2580" vertical-scroll-proportion="0.0">
+            <state line="133" column="80" selection-start="3549" selection-end="3549" vertical-scroll-proportion="0.41266376">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dodecathedral.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/generalprocessingunit/dodecathedral/droid/Dodecathedral.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="61" selection-start="867" selection-end="867" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dodecathedral.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/generalprocessingunit/dodecathedral/droid/Dodecathedral.java">
+      <file leaf-file-name="Demo.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Demo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="68" selection-start="1857" selection-end="1857" vertical-scroll-proportion="0.5534407">
+            <state line="98" column="30" selection-start="2583" selection-end="2583" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractExercise.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractExercise.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="83" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -420,7 +441,7 @@
       <file leaf-file-name="Dodecahedron.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Dodecahedron.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="126" column="57" selection-start="5044" selection-end="5044" vertical-scroll-proportion="0.0">
+            <state line="187" column="21" selection-start="6762" selection-end="6762" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -429,7 +450,7 @@
       <file leaf-file-name="Pentagon.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Pentagon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="38" selection-start="4205" selection-end="4205" vertical-scroll-proportion="0.0">
+            <state line="120" column="34" selection-start="4106" selection-end="4106" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -444,28 +465,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="53" selection-start="835" selection-end="835" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MenuManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/MenuManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="44" column="28" selection-start="1881" selection-end="1883" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Command.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Command.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="88" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -498,22 +501,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/generalprocessingunit/Dodecathedral/Droid/Dodecathedral.java" />
-        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/IDodecathedral.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/UserData.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Exercises.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/MultiTouch.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/DeltaSequences.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Command.java" />
-        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Dodecahedron.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/MenuItem.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/MenuManager.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Pentagon.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Stars.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractDodecathedral.java" />
         <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/DeltaHistory.java" />
+        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractExercise.java" />
+        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Dodecahedron.java" />
         <option value="$PROJECT_DIR$/src/com/generalprocessingunit/dodecathedral/droid/Dodecathedral.java" />
+        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Demo.java" />
+        <option value="$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractDodecathedral.java" />
       </list>
     </option>
   </component>
@@ -547,7 +550,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -562,69 +565,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="PdCore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dodecathedral-Droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PdCore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dodecathedral-Droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PdCore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dodecathedral-Droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="dodecathedral-droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dodecathedral-Droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dodecathedral-droid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -636,7 +583,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="preferences.keymap" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dodecathedral-win" />
     <property name="project.structure.side.proportion" value="0.29200464" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -822,7 +769,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -844,7 +791,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19978632" sideWeight="0.7627291" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23727088" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23727088" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -919,16 +866,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../dependencies/pd-for-android/midi/AndroidMidi/src/com/noisepages/nettoyeur/usb/midi/util/UsbMidiInputSelector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="89" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dependencies/processing/android/core/src/processing/core/PGraphics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2814" column="14" selection-start="80033" selection-end="80033" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dependencies/processing/android/core/src/processing/core/PShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2094" column="14" selection-start="49748" selection-end="49748" vertical-scroll-proportion="12.933333" />
@@ -962,13 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Pentagon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="38" selection-start="4205" selection-end="4205" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Stars.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="45" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.0">
@@ -995,20 +925,6 @@
         <state line="80" column="12" selection-start="2614" selection-end="2663" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Dodecahedron.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="57" selection-start="5044" selection-end="5044" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractDodecathedral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="61" selection-start="2580" selection-end="2580" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/DeltaHistory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="31" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0">
@@ -1016,10 +932,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractExercise.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="83" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Dodecahedron.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="21" selection-start="6762" selection-end="6762" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Pentagon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="120" column="34" selection-start="4106" selection-end="4106" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/generalprocessingunit/dodecathedral/droid/Dodecathedral.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="68" selection-start="1857" selection-end="1857" vertical-scroll-proportion="0.5534407">
+        <state line="31" column="61" selection-start="867" selection-end="867" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/Demo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="30" selection-start="2583" selection-end="2583" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dodecathedral-core/src/com/generalprocessingunit/dodecathedral/core/AbstractDodecathedral.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="80" selection-start="3549" selection-end="3549" vertical-scroll-proportion="0.41266376">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

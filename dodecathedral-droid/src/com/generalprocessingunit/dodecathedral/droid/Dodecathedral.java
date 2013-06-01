@@ -12,8 +12,10 @@ import org.puredata.android.io.PdAudio;
 import org.puredata.core.PdBase;
 import org.puredata.core.utils.IoUtils;
 import processing.core.PApplet;
+import processing.core.PConstants;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Dodecathedral extends AbstractDodecathedral {
 
@@ -27,6 +29,13 @@ public class Dodecathedral extends AbstractDodecathedral {
     public void setup() {
         orientation(LANDSCAPE);
         super.setup();
+
+        hint(PConstants.DISABLE_DEPTH_MASK);
+        Dodecahedron.drawAllPanels(this);
+        fill(255);
+        rect(0,0,width, height);
+        hint(PConstants.ENABLE_DEPTH_MASK);
+
     }
 
     @Override

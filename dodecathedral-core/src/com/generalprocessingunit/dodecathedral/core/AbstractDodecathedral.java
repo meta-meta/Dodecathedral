@@ -1,6 +1,10 @@
 package com.generalprocessingunit.dodecathedral.core;
 
-import processing.core.*;
+import com.generalprocessingunit.dodecathedral.core.exercises.Exercises;
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PImage;
+import processing.core.PShape;
 
 /**
  * Author: Paul
@@ -34,9 +38,6 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
         createLogoRect();
 
         Dodecahedron.createGeometry(this);
-        Dodecahedron.drawAllPanels(this);
-        fill(255);
-        rect(0,0,width, height);
 
         MenuManager.loadFonts(this, charset);
         Message.loadFonts(this, charset);
@@ -103,15 +104,22 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
 
 
 
-        if(millis() - millisAtFrameZero < 7000)
-        {
-            showSplashscreen();
-            return;
-        }
+//        if(millis() - millisAtFrameZero < 7000)
+//        {
+//            showSplashscreen();
+//            return;
+//        }
 
         switch (Modes.currentMode) {
             case DEMO_PLAYING:
                 demo.playSequence();
+                hint(PConstants.DISABLE_DEPTH_MASK);
+                fill(200,180, 160, 30);
+                stroke(200,180, 160);
+                strokeWeight(4);
+                blendMode(PConstants.ADD);
+                rect(0,0,width,height);
+                hint(PConstants.ENABLE_DEPTH_MASK);
                 break;
             case MENU:
                 MenuManager.plot(this, width / 40, height / 40, width - width / 20, height - height / 20);
@@ -136,7 +144,7 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
 
     private void showSplashscreen() {
 
-        fill(255);
+        fill(66);
         tint(255);
         int millis = millis() - millisAtFrameZero;
 
@@ -145,7 +153,7 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
         int u = t - 2000;
         if(millis > u)
         {
-            fill(255, 255 - (millis-u)/15f );
+            fill(66, 255 - (millis-u)/15f );
         }
 
 

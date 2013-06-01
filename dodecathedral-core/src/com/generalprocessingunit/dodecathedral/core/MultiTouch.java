@@ -11,7 +11,7 @@ public class MultiTouch {
 	float size, prevSize;
 	public int millisAtFirstTouch, millisAtLastMove = 0, prevMillis;
 	int id;
-	boolean touched = false;
+	public boolean touched = false;
 	boolean tap = false;
 
 	// Executed when this index has been touched:

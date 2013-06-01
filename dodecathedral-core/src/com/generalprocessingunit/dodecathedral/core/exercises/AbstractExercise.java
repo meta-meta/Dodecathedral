@@ -1,4 +1,6 @@
-package com.generalprocessingunit.dodecathedral.core;
+package com.generalprocessingunit.dodecathedral.core.exercises;
+
+import com.generalprocessingunit.dodecathedral.core.*;
 
 import java.util.Iterator;
 
@@ -69,10 +71,10 @@ public abstract class AbstractExercise implements IExercise{
     @Override
     public void monitorInput(int noteCountAtInputStart) {
         if (!checkNotesPlayed(noteCountAtInputStart)) {
-            // You fucked up.
+            // You done goofed.
             Demo.setSequence(currentSequence);
             Modes.switchMode(Modes.Mode.DEMO_PLAYING);
-            Message.showMessage("You fucked up. Try Again.", Message.MessageType.REJECTION);
+            Message.showMessage("You done goofed. Try Again.", Message.MessageType.REJECTION);
             return;
         }
 

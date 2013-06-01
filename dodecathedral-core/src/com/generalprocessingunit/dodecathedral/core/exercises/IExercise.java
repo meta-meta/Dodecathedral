@@ -1,4 +1,4 @@
-package com.generalprocessingunit.dodecathedral.core;
+package com.generalprocessingunit.dodecathedral.core.exercises;
 
 /**
  * Author: Paul

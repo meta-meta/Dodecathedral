@@ -8,8 +8,8 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class DeltaSequenceCollection extends LinkedHashMap<String, DeltaSequence>
 {
-	String name;
-	ArrayList<String> messages;
+	public String name;
+	public ArrayList<String> messages;
 
 	public DeltaSequenceCollection(String name) {
         super();

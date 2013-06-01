@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeltaSequence {
-    List<Integer> deltas;
+    public List<Integer> deltas;
     List<Float> rhythm;
-    String name;
-    String message = "Let's play %s"; //default message to be displayed for a deltasequence in an exercise
+    public String name;
+    public String message = "Let's play %s"; //default message to be displayed for a deltasequence in an exercise
 
     public DeltaSequence(String name, List<Integer> deltas, List<Float> rhythm, String message) {
         this.deltas = deltas;

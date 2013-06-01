@@ -163,7 +163,7 @@ public class Dodecahedron {
 	public static void plot(PApplet p5, IDodecathedral parent) {
 		setLookatVector(p5);
 
-        float fov = PApplet.PI/2.7f;
+        float fov = PApplet.PI/2.6f;
         float cameraZ = (p5.height/2.0f) / PApplet.tan(fov/2.0f);
         float backedUp = 1500f;
         p5.perspective(fov, 1.05f*(float)(p5.width)/(float)p5.height, cameraZ/10f, cameraZ*100000f);
@@ -183,7 +183,7 @@ public class Dodecahedron {
         tapIndicator = 0;
 	}
 
-    static void drawAllPanels(PApplet p5){
+    public static void drawAllPanels(PApplet p5){
         for(Pentagon p : pentagons){
             p.drawAllPanels(p5);
         }
