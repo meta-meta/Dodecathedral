@@ -14,6 +14,8 @@ gen/
 
 # Local configuration file (sdk path, etc)
 .idea/
+dodecathedral-droid/.idea/
+dodecathedral-win/.idea/
 *.iws
 local.properties
 project.properties
