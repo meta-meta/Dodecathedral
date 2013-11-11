@@ -10,3 +10,6 @@
 [submodule "dependencies/lipd-windows-build"]
 	path = dependencies/lipd-windows-build
 	url = git://github.com/wivlaro/libpd-java-build.git
+[submodule "dependencies/processing-android"]
+	path = dependencies/processing-android
+	url = https://github.com/processing/processing-android.git
