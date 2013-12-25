@@ -6,7 +6,11 @@ import android.content.Context;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import com.generalprocessingunit.dodecathedral.core.*;
+import com.generalprocessingunit.dodecathedral.core.AbstractDodecathedral;
+import com.generalprocessingunit.dodecathedral.core.DeltaHistory;
+import com.generalprocessingunit.dodecathedral.core.Dodecahedron;
+import com.generalprocessingunit.dodecathedral.core.MenuManager;
+import com.generalprocessingunit.dodecathedral.core.Modes;
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.io.PdAudio;
 import org.puredata.core.PdBase;
@@ -132,11 +136,6 @@ public class Dodecathedral extends AbstractDodecathedral {
 
     @Override
     public boolean surfaceTouchEvent(MotionEvent me) {
-        // Avoid null pointer exception
-        if(null == me){
-            return super.surfaceTouchEvent(null);
-        }
-
         // Find number of touch points:
         int pointers = me.getPointerCount();
 

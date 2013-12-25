@@ -222,14 +222,4 @@ public abstract class AbstractDodecathedral extends PApplet implements IDodecath
 
     @Override
     public void vibrate() {}
-
-    @Override
-    public int getSketchWidth() {
-        return width;
-    }
-
-    @Override
-    public int getSketchHeight() {
-        return height;
-    }
 }

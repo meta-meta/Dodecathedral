@@ -13,10 +13,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PdCore" />
-    <orderEntry type="module" module-name="processing-core" />
     <orderEntry type="module" module-name="dodecathedral-core" />
-    <orderEntry type="module" module-name="libpd" />
+    <orderEntry type="module" module-name="android-core" />
+    <orderEntry type="module" module-name="PdCore" />
   </component>
 </module>
 

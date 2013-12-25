@@ -13,10 +13,6 @@ public interface IDodecathedral {
 
 	void singleTap();
 
-	int getSketchWidth();
-
-	int getSketchHeight();
-
     boolean toggleDrone();
 
     void setNote();
