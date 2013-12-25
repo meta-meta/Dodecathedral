@@ -9,6 +9,7 @@ For Dodecathedral-win, the libpd dlls need to be added to a folder that is on th
 Dodecathedral\dependencies\lipd-windows-build\java-build\org\puredata\core\natives\windows\x86_64
 
 Dodecathedral-Droid dependencies:
+	
 	dodecathedral-core
 		dependencies\processing-android\core
 
