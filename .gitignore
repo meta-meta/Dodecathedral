@@ -13,7 +13,6 @@ bin/
 gen/
 
 # Local configuration file (sdk path, etc)
-.idea/
 dodecathedral-droid/.idea/workspace.xml
 dodecathedral-droid/.idea/tasks.xml
 dodecathedral-win/.idea/workspace.xml
