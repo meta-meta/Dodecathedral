@@ -59,6 +59,9 @@ public class DeltaSequenceLibrary {
         c.put("Jurassic Park", new DeltaSequence("Jurassic Park",
                 Arrays.asList(5, -1, 1, -5, -2, 7, -1, 1, -5, -2, 7, -1, 1, 2, 0, 3, 0),
                 Arrays.asList(1f, 1f, 2f, 2f, 2f, 1f, 1f, 2f, 2f, 2f, 1f, 1f, 3f, 1f, 3f, 1f, 3f)));
+        c.put("Close Encounters", new DeltaSequence("Close Encounters",
+                Arrays.asList(0, 2, 8, 0, 7),
+                Arrays.asList(1f, 1f, 1f, 1f, 1f)));
         c.put("Mozart", new DeltaSequence("Mozart",
                 Arrays.asList(5, -5, 5, -5, 5, -5, 5, 4, 3, -2, -3, 3, -3, 3, -3, -3, 3, -7),
                 Arrays.asList(1.5f, 0.5f, 1.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 2f, 1.5f, 0.5f, 1.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 2f)));
