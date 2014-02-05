@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/../dodecathedral-core/dodecathedral-core.iml" filepath="$PROJECT_DIR$/../dodecathedral-core/dodecathedral-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/dodecathedral-win.iml" filepath="$PROJECT_DIR$/dodecathedral-win.iml" />
       <module fileurl="file://$PROJECT_DIR$/../dependencies/libpd/java/libpd.iml" filepath="$PROJECT_DIR$/../dependencies/libpd/java/libpd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dependencies/processing/core/processing-core.iml" filepath="$PROJECT_DIR$/../dependencies/processing/core/processing-core.iml" />
       <module fileurl="file://C:/Dev Tools/processing/core/processing-core.iml" filepath="C:/Dev Tools/processing/core/processing-core.iml" />
     </modules>
   </component>
