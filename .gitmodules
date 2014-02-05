@@ -1,15 +1,20 @@
 [submodule "dependencies/pd-for-android"]
 	path = dependencies/pd-for-android
 	url = https://github.com/libpd/pd-for-android.git
+	ignore = dirty
 [submodule "dependencies/processing"]
 	path = dependencies/processing
 	url = https://github.com/processing/processing.git
+	ignore = dirty
 [submodule "dependencies/libpd"]
 	path = dependencies/libpd
 	url = git://github.com/libpd/libpd.git
+	ignore = dirty
 [submodule "dependencies/lipd-windows-build"]
 	path = dependencies/lipd-windows-build
 	url = git://github.com/wivlaro/libpd-java-build.git
+	ignore = dirty
 [submodule "dependencies/processing-android"]
 	path = dependencies/processing-android
 	url = https://github.com/processing/processing-android.git
+	ignore = dirty
