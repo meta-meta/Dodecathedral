@@ -1,0 +1,11 @@
+* Start in room with C note.
+Prompt user to find A note with picture of the A.
+Time counts down and is replenished a bit when the correct note is found.
+The sequence continues until time runs out.
+Goal is to get the longest sequence.
+
+	* This is an introductory level. Simple dynamics - familiarizes the player with the modulo12 environment.
+
+	* Initially the player probably thinks that the notes are arbitrarily placed in each room. However each room is the distinct home for a note or pitch class rather.
+
+	* In future levels, other pitch classes will coexist in the same room but they will be smaller and/or floating around in orbit or in a more electron type orbit whereas the room's pitch class will be static and centered in the room.
